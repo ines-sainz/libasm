@@ -79,10 +79,28 @@ Las líneas están compuestas por una instrucción seguida por sus operadores.
 ### Comparación e instrucciones de test
 - cmp: comparar el valor del registro con un valor (v1 - v2)
 - test: compara el valor del registro con un valor (v1 & v2)
-### Códigos 
+### Acceso a códigos de condición
+#### Instrucciones condicionales de seteo
+- sete / setz: se setea si es igual o cero
+- setne / setnz: se setea si no es igual o no es cero
+- sets: se setea si es negativo.
+- setns: se setea si no es negativo
+- setg / setnle: se setea si es mayor que (con signo)
+- setge / setnl: se setea si es mayor o igual (con signo)
+- setl / setnge: se setea si es menor que (con signo)
+- setle / setng: se setea si es menor o igual (con signo)
+- seta / setnbe: se setea si es superior (sin signo)
+- setae / setnb: se setea si es superior o igual (sin signo)
+- setb / setnae: se setea si es inferior (sin signo)
+- setbe / setna: se setea si es inferior o igual (sin signo)
+#### Instrucciones de salto
+- jmp: saltar a una etiqueta o a una localización específica
+- je / jz: saltar si es igual o cero
+- jne / jnz: saltar si no es igual o no es cero
+- js: saltar si es negativo
+- jns: saltar si no es negativo
 
 
-- jmp: saltar a una etiqueta
 [dirección de memoria] para acceder a una dirección de memoria específica
 [dirección + posición] para acceder a una dirección de memoria específica
 
