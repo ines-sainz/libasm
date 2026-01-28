@@ -99,7 +99,9 @@ Las líneas están compuestas por una instrucción seguida por sus operadores.
 - jne / jnz: saltar si no es igual o no es cero
 - js: saltar si es negativo
 - jns: saltar si no es negativo
-
+- jg / jnle: saltar si es mayor que (con signo)
+- jge / jnl: saltar si es mayor o igual (con signo)
+- 
 
 [dirección de memoria] para acceder a una dirección de memoria específica
 [dirección + posición] para acceder a una dirección de memoria específica
