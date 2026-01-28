@@ -101,7 +101,30 @@ Las líneas están compuestas por una instrucción seguida por sus operadores.
 - jns: saltar si no es negativo
 - jg / jnle: saltar si es mayor que (con signo)
 - jge / jnl: saltar si es mayor o igual (con signo)
-- 
+- jl / jnge: saltar si es menor que (con signo)
+- jle / jng: saltar si es menor o igual (con signo)
+- ja / jnbe: saltar si es superior (sin signo)
+- jae / jnb: saltar si es superior o igual (sin signo)
+- jb / jnae: saltar si es inferior (sin signo)
+- jbe / jna: saltar si es inferior o igual (sin signo)
+#### Instrucciones condicionales de movimiento
+- cmove / cmovz: mover si es igual o es cero
+- cmovene / cmovnz: mover si no es igual o no es cero
+- cmovs: mover si es negativo
+- cmovns: mover si no es negativo
+- cmovg / cmovnle: mover si es mayor (con signo)
+- cmovge / cmovnl: mover si es mayor o igual (con signo)
+- cmovl / cmovnge: mover si es menor (con signo)
+- cmovle / cmovng: mover si es menor o igual (con signo)
+- cmova / cmovnbe: mover si es superior (sin signo)
+- cmovae / cmovnb: mover si es superior o igual (sin signo)
+- cmovb / cmovnae: mover si es inferior (sin signo)
+- cmovbe / cmovna: mover si es inferior o igual (sin signo)
+### Instrucciones de llamada a un procedimiento
+- call: guarda la dirección siguiente y salta a la función
+- call *operador: guarda el retorno y salta a la dirección indicada
+- ret: saca la dirección de retorno de el stack y salta a esa dirección
+- leave: restaura la pila al estado de antes de la llamada
 
 [dirección de memoria] para acceder a una dirección de memoria específica
 [dirección + posición] para acceder a una dirección de memoria específica
