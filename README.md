@@ -40,20 +40,20 @@ Ensamblador y desensamblador para la arquitectura Intel x86. Usa la sintaxis Int
 Comentarios: `;`
 
 ## Registros
-Pueden ser usados en cualquier momento por el sistema para leer o escribir
-- rax: valores de retorno, syscalls
+Pueden ser usados en cualquier momento por el sistema para leer o escribir. Son una memoria pequeña muy rápida de la CPU por la que pasan todos los cálculos, comparaciones, llamadas a funciones o al sistema...
+- rax: acumulador, valores de retorno, syscalls (64 bits)
 - rcx: contador para los bucles
-- rbx: 
+- rbx: para preservar registros, no se destruye al llamar funciones se debe restaurar antes de usar
 - rdi: primer argumento
 - rsi: segundo argumento
 - rdx: tercer argumento
+- r8 - r15: para pasar los argumentos siguientes
 - rsp: puntero de stack
 - rbp: base del stack
-- r8 - r15: para pasar argumentos
 - rip: 
 
 ## Instrucciones
-Las líneas están compuestas por una instrucción seguida por sus operadores.
+Las líneas están compuestas por una instrucción seguida por sus operadores. Intrucción destino, fuente.
 ### Movimiento de datos:
 - mov: mover un valor a un registro
 - push: añadir un valor a un stack
@@ -129,14 +129,19 @@ Las líneas están compuestas por una instrucción seguida por sus operadores.
 [dirección de memoria] para acceder a una dirección de memoria específica
 [dirección + posición] para acceder a una dirección de memoria específica
 
+## Flags
+- ZF: resultado = 0
+- SF: negativo
+- CF: carry sin signo
+- OF: overflow con signo
+
 ## Llamar desde C
 Podemos exportar las funciones escritas en ensamblador a un programa en C con `global nombre_de_la_función`
-- `gcc -c programa.s`
-- `gcc -c main.c`
-- `gcc sum.o main.o -o ejecutable`
+- `gcc -g main.c programa.s - o ejecutable`
 - `./ejecutable`
 
 ## Compilar
+C y ASM generan el mismo binario ELF
 ### Programas .s
 (se puede usar `as programa.s` o `gcc -c programa.s`)
 - `as programa.s -o programa.o`
@@ -150,3 +155,54 @@ Podemos exportar las funciones escritas en ensamblador a un programa en C con `g
 - `gcc -c programa.s`
 - `ar -rcs libasm.a programas.o`
 - `gcc main.c -L. libasm.a -lmath`
+
+## FT_STRLEN
+```
+size_t	ft_strlen(const char *s)
+{
+	size_t	i;
+
+	i = 0;
+	if (!s)
+		return (0);
+	while (s[i])
+		i++;
+	return (i);
+}
+```
+
+### xor rcx, rcx
+- no necesita memoria
+- no depende de valores anteriores
+- rompe dependencias internas usando el dependency breaking
+- la CPU lo reconoce como poner a 0
+- tiene solo un ciclo
+- óptimo y optimizable
+- 3 bytes
+- Modifica flags
+- ZF = 1
+- SF = 0
+### mov rcx, 0
+- carga un inmediato
+- ocupa más espacio
+- menos óptimo
+- 7 bytes
+- no modifica flags
+
+## FT_STRCPY
+```
+char	*ft_strcpy(char *dest, char *src)
+{
+	int	i;
+
+	i = 0;
+	while (src[i] != '\0')
+	{
+		dest[i] = src[i];
+		i++;
+	}
+	dest[i] = '\0';
+	return (dest);
+}
+
+```

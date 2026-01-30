@@ -5,11 +5,12 @@ ft_strlen:
     mov rcx, 0
 
     loop:
-        cmp byte ptr [rcx + rdi], 0
-        je end
+        cmp byte ptr [rdi], 0
+        je salir
+        inc rdi
         inc rcx
         jmp loop
 
-end:
+salir:
     mov rax, rcx
     ret
