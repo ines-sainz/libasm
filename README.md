@@ -127,7 +127,10 @@ Las líneas están compuestas por una instrucción seguida por sus operadores. I
 - leave: restaura la pila al estado de antes de la llamada
 
 [dirección de memoria] para acceder a una dirección de memoria específica
+
 [dirección + posición] para acceder a una dirección de memoria específica
+
+mov [rax], [rdi]: No se permiten hacer movimientos de memoria a memoria
 
 ## Flags
 - ZF: resultado = 0
@@ -206,3 +209,13 @@ char	*ft_strcpy(char *dest, char *src)
 }
 
 ```
+mov byte ptr al, [rsi]
+
+no usas byte ptr con registros, solo con memoria.
+
+mov al, [rsi]
+
+
+.section .note.GNU-stack,"",@progbits
+|->
+“This object file does not need an executable stack.”

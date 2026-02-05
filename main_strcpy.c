@@ -1,55 +1,39 @@
 #include <stdio.h>
 #include <string.h>
 
-size_t ft_strlen(const char *s);
+char *ft_strcpy(char *dst, const char *src);
 
 int main(void)
 {
-    const char *s = "hola mundo";
-    const char *s1 = "h";
-    const char *s2 = "0123456789";
-    const char *s3 = "hola";
-    const char *s4 = "";
+	char *str = "Hello";
+    char str1[100];
+    char str2[100];
 
-	printf("TEST 0: %s\n", s);
-    printf("ft_strlen: %zu\n", ft_strlen(s));
-    printf("strlen   : %zu\n", strlen(s));
+    printf("TEST 0\n");
+    printf("ft_strcpy: %s\n", ft_strcpy(str1, str));
+    printf("strcpy   : %s\n", strcpy(str2, str));
 
 	printf("-------------------------------\n");
 
-	printf("TEST 1: %s\n", s1);
-	printf("ft_strlen: %zu\n", ft_strlen(s1));
-    printf("strlen   : %zu\n", strlen(s1));
+	str = "a";
+    printf("TEST 1\n");
+    printf("ft_strcpy: %s\n", ft_strcpy(str1, str));
+    printf("strcpy   : %s\n", strcpy(str2, str));
 
 	printf("-------------------------------\n");
 
-	printf("TEST 2: %s\n", s2);
-    printf("ft_strlen: %zu\n", ft_strlen(s2));
-    printf("strlen   : %zu\n", strlen(s2));
+	str = "Patataaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
+    printf("TEST 2\n");
+    printf("ft_strcpy: %s\n", ft_strcpy(str1, str));
+    printf("strcpy   : %s\n", strcpy(str2, str));
 
 	printf("-------------------------------\n");
 
-	printf("TEST 3: %s\n", s3);
-	printf("ft_strlen: %zu\n", ft_strlen(s3));
-    printf("strlen   : %zu\n", strlen(s3));
+	str = "";
+    printf("TEST 3\n");
+    printf("ft_strcpy: %s\n", ft_strcpy(str1, str));
+    printf("strcpy   : %s\n", strcpy(str2, str));
 
 	printf("-------------------------------\n");
 
-	printf("TEST 4: %s\n", s4);
-	printf("ft_strlen: %zu\n", ft_strlen(s4));
-    printf("strlen   : %zu\n", strlen(s4));
-
-    return 0;
 }
-
-
-/*int	main(void)
-{
-	char	str1[] = "";
-	char	*str2;
-
-	str2 = "hhhhh";
-	ft_strcpy(str1, str2);
-	printf("%s", ft_strcpy(str1, str2));
-	return (0);
-}*/

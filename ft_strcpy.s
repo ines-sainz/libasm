@@ -4,11 +4,17 @@
 ft_strcpy:
 	xor rcx, rcx
 	loop:
-		cmp byte ptr rsi, 0
+		cmp byte ptr [rcx + rsi], 0
 		je salir
 
-		mov byte ptr rdi, rsi
+		mov al, [rcx + rsi]
+		mov [rcx + rdi], al
 		inc rcx
+		jmp loop
 
 salir:
+	mov byte ptr [rcx + rdi], 0
 	mov rax, rdi
+	ret
+
+.section .note.GNU-stack,"",@progbits
