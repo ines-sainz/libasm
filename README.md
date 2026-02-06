@@ -52,6 +52,32 @@ Pueden ser usados en cualquier momento por el sistema para leer o escribir. Son 
 - rbp: base del stack
 - rip: 
 
+```
+rax is a 64-bit register.
+But parts of it have smaller names:
+
+Name	Size	What it is
+rax	64-bit	full register
+eax	32-bit	lower 32 bits of rax
+ax	16-bit	lower 16 bits
+al	8-bit	lowest byte
+ah	8-bit	second lowest byte
+rax = [B7][B6][B5][B4][B3][B2][B1][B0]
+                                   ↑
+                                  al
+
+Same idea for rdx:
+
+Name	Size
+rdx	64-bit
+edx	32-bit
+dx	16-bit
+dl	low 8 bits
+
+👉 al is literally the lowest 8 bits of rax.
+👉 dl is the lowest 8 bits of rdx.
+```
+
 ## Instrucciones
 Las líneas están compuestas por una instrucción seguida por sus operadores. Intrucción destino, fuente.
 ### Movimiento de datos:
@@ -219,3 +245,28 @@ mov al, [rsi]
 .section .note.GNU-stack,"",@progbits
 |->
 “This object file does not need an executable stack.”
+
+## FT_STRCMP
+```
+int	ft_strcmp(char *s1, char *s2)
+{
+	int	i;
+	int	c;
+
+	c = 0;
+	i = 0;
+	while (s1[i] != '\0' || s2[i] != '\0')
+	{
+		if (s1[i] != s2[i])
+		{
+			return (s1[i] - s2[i]);
+		}
+		i++;
+	}
+	return (0);
+}
+```
+
+## FT_WRITE
+
+ssize_t write(int fd, const void *buf, size_t count);

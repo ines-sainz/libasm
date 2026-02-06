@@ -34,6 +34,4 @@ int main(void)
     printf("ft_strcpy: %s\n", ft_strcpy(str1, str));
     printf("strcpy   : %s\n", strcpy(str2, str));
 
-	printf("-------------------------------\n");
-
 }
