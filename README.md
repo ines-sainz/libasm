@@ -316,5 +316,9 @@ This assembly is basically:
 
 write(1, "Hello, world!\n", 14);
 
-
 So if you understand function calls — syscalls are just OS functions with registers instead of arguments.
+
+## FT_READ
+
+ssize_t read(int fd, void buf[.count], size_t count);
+
