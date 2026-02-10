@@ -270,3 +270,51 @@ int	ft_strcmp(char *s1, char *s2)
 ## FT_WRITE
 
 ssize_t write(int fd, const void *buf, size_t count);
+
+🖥️ Linux x86-64 — write to terminal using write syscall
+
+```
+section .data
+msg db "Hello, world!", 10
+len equ $ - msg
+
+section .text
+global _start
+
+_start:
+    mov rax, 1      ; syscall number for write
+    mov rdi, 1      ; file descriptor (1 = stdout)
+    mov rsi, msg    ; pointer to text
+    mov rdx, len    ; length of text
+    syscall
+
+    mov rax, 60     ; syscall number for exit
+    xor rdi, rdi
+    syscall
+```
+
+🧠 What each register means (this is the key part)
+
+When you call write(fd, buffer, length) in assembly:
+
+Register	Meaning
+rax	syscall number (1 = write)
+rdi	where to write (1 = terminal)
+rsi	address of text
+rdx	number of bytes
+
+Then:
+
+syscall
+
+
+tells the OS → “do the thing”.
+
+📦 Conceptual translation to C
+
+This assembly is basically:
+
+write(1, "Hello, world!\n", 14);
+
+
+So if you understand function calls — syscalls are just OS functions with registers instead of arguments.
