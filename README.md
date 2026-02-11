@@ -158,6 +158,55 @@ Las líneas están compuestas por una instrucción seguida por sus operadores. I
 
 mov [rax], [rdi]: No se permiten hacer movimientos de memoria a memoria
 
+## Llamadas a kernel
+Una system call (syscall) es la forma en la que un programa en modo usuario le pide al kernel que haga algo privilegiado porque tu programa normal no puede tocar directamente el sistema operativo ni el hardware. tu programa → syscall → kernel → hardware / recursos
+- leer/escribir archivos
+- abrir sockets
+- reservar memoria
+- crear procesos
+- hablar con hardware
+
+### En Linux moderno (x86-64), el flujo típico es:
+
+1️⃣ Pones el número de syscall en RAX
+
+Cada syscall tiene un número.
+- write = 1
+- read = 0
+- exit = 60
+
+2️⃣ Pones los argumentos en registros
+
+Convención estándar Linux x86-64:
+- RDI: arg1
+- RSI: arg2
+- RDX: arg3
+- R10: arg4
+- R8: arg5
+- R9: arg6
+
+3️⃣ Ejecutas la instrucción syscall
+
+Esto cambia de modo usuario → modo kernel.
+
+4️⃣ El resultado vuelve en RAX
+
+- valor positivo = OK
+- negativo = error
+
+### 🔢 Número de syscalls
+
+🐧 Linux x86-64: ~450–550 syscalls según kernel
+- 0 → read
+- 1 → write
+- 2 → open
+- 3 → close
+- 9 → mmap
+- 39 → getpid
+- 57 → fork
+- 59 → execve
+- 60 → exit
+
 ## Flags
 - ZF: resultado = 0
 - SF: negativo
@@ -305,10 +354,7 @@ rdx	number of bytes
 
 Then:
 
-syscall
-
-
-tells the OS → “do the thing”.
+syscall: tells the OS → “do the thing”.
 
 📦 Conceptual translation to C
 
@@ -322,3 +368,53 @@ So if you understand function calls — syscalls are just OS functions with regi
 
 ssize_t read(int fd, void buf[.count], size_t count);
 
+```
+.intel_syntax noprefix
+.global ft_read
+
+ft_read:
+
+	mov rax, 0
+	syscall
+
+	cmp rax, 0 ; si hay un error tienes q hacer cosas
+	jl error
+	
+	ret
+
+error:
+    neg rax
+; rax tiene el errno, lo tienes q poner a positivo porque kernel lo devuelve negativo pero lo necesitas positivo
+    mov rdi, rax
+; guardas el valor de errno en rdi
+    call __errno_location
+; guarda el puntero a errno en rax
+    mov [rax], rdi
+; le das a errno el valor de rax al acceder a su dirección *errno = valor
+    mov rax, -1
+; devolver -1 por read
+    ret
+```
+
+## FT_STRDUP
+```
+char	*ft_strdup(const char *s1)
+{
+	int		len;
+	char	*new_string;
+	int		i;
+
+	i = 0;
+	len = ft_strlen(s1);
+	new_string = malloc(len + 1);
+	if (!new_string)
+		return (NULL);
+	new_string[len] = 0;
+	while (i < len)
+	{
+		new_string[i] = s1[i];
+		i++;
+	}
+	return (new_string);
+}
+```
