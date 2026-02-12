@@ -418,3 +418,17 @@ char	*ft_strdup(const char *s1)
 	return (new_string);
 }
 ```
+
+## FT_ATOI_BASE
+- Write a function that converts the initial portion of the string pointed to by str into an integer representation.
+- str is in a specific base, given as a second parameter.
+- Except for the base rule, the function should behave exactly like ft_atoi.
+- If an invalid argument is provided, the function should return 0.
+
+Examples of invalid arguments:
+- The base is empty or has only one character.
+- The base contains duplicate characters.
+- The base contains +, -, or whitespace characters.
+- The function should be prototyped as follows:
+
+int ft_atoi_base(char *str, char *base);
