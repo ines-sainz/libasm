@@ -82,9 +82,7 @@ int ft_atoi_base(const char *str, char *base)
 	base_len = ft_strlen(base);
 	while (str[i])
 	{
-		printf("num: %i\n", num);
-		num = num * base_len + (str[i] - '0');
-		printf("num 2: %i\n", num);
+		num = num * base_len + get_pos(str[i], base);//(str[i] - '0');
 		i++;
 	}
 	return (num);
