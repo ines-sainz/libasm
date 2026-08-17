@@ -1,5 +1,6 @@
 .intel_syntax noprefix
 .global ft_read
+.extern __errno_location
 
 ft_read:
 

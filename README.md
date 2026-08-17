@@ -52,6 +52,8 @@ Pueden ser usados en cualquier momento por el sistema para leer o escribir. Son 
 - rbp: base del stack
 - rip: 
 
+dword = 4 bytes
+
 ```
 rax is a 64-bit register.
 But parts of it have smaller names:
@@ -178,12 +180,12 @@ Cada syscall tiene un número.
 2️⃣ Pones los argumentos en registros
 
 Convención estándar Linux x86-64:
-- RDI: arg1
-- RSI: arg2
-- RDX: arg3
-- R10: arg4
-- R8: arg5
-- R9: arg6
+- rdi: arg1
+- rsi: arg2
+- rdx: arg3
+- r10(rcx): arg4
+- r8: arg5
+- r9: arg6
 
 3️⃣ Ejecutas la instrucción syscall
 
@@ -284,6 +286,24 @@ char	*ft_strcpy(char *dest, char *src)
 }
 
 ```
+
+```
+char *ft_strcpy(char *dest, const char *src)
+{
+    char *original_dest = dest;
+
+    while (*src != '\0')
+    {
+        *dest = *src;
+        dest++;
+        src++;
+    }
+
+    *dest = '\0';
+    return original_dest;
+}
+```
+
 mov byte ptr al, [rsi]
 
 no usas byte ptr con registros, solo con memoria.
@@ -418,6 +438,53 @@ char	*ft_strdup(const char *s1)
 	return (new_string);
 }
 ```
+
+```
+char *ft_strdup(const char *s)
+{
+    char *new;
+
+    new = malloc(strlen(s) + 1);
+    if (new == NULL)
+    {
+        errno = ENOMEM; // 12 guardar errno
+        return NULL; // 0
+    }
+
+    strcpy(new, s);
+    return new;
+}
+```
+
+### rbx
+ft_strdup("hola");
+Antes de llamar a tu función, el programa podría tener: rbx = 123456
+Si haces: mov rbx, rdi
+	rbx = dirección de "hola"
+Cuando tu función termina, el programa que te llamó espera que rbx siga siendo: rbx = 123456
+Por eso rbx es callee-saved.
+Hay dos tipos de registros
+#### Caller-saved:
+rax
+rcx
+rdx
+rsi
+rdi
+r8
+r9
+r10
+r11
+Una función puede destruirlos tranquilamente.
+
+#### Callee-saved:
+rbx
+rbp
+r12
+r13
+r14
+r15
+Si tu función los modifica, tiene que restaurarlos antes de hacer ret.
+
 
 ## FT_ATOI_BASE
 - Write a function that converts the initial portion of the string pointed to by str into an integer representation.
