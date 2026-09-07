@@ -59,11 +59,11 @@ rax is a 64-bit register.
 But parts of it have smaller names:
 
 Name	Size	What it is
-rax	64-bit	full register
-eax	32-bit	lower 32 bits of rax
-ax	16-bit	lower 16 bits
-al	8-bit	lowest byte
-ah	8-bit	second lowest byte
+rax 	64-bit	full register
+eax		32-bit	lower 32 bits of rax
+ax		16-bit	lower 16 bits
+al		8-bit	lowest byte
+ah		8-bit	second lowest byte
 rax = [B7][B6][B5][B4][B3][B2][B1][B0]
                                    ↑
                                   al
@@ -71,10 +71,10 @@ rax = [B7][B6][B5][B4][B3][B2][B1][B0]
 Same idea for rdx:
 
 Name	Size
-rdx	64-bit
-edx	32-bit
-dx	16-bit
-dl	low 8 bits
+rdx		64-bit
+edx		32-bit
+dx		16-bit
+dl		low 8 bits
 
 👉 al is literally the lowest 8 bits of rax.
 👉 dl is the lowest 8 bits of rdx.
@@ -159,6 +159,32 @@ Las líneas están compuestas por una instrucción seguida por sus operadores. I
 [dirección + posición] para acceder a una dirección de memoria específica
 
 mov [rax], [rdi]: No se permiten hacer movimientos de memoria a memoria
+
+## Push
+Instrucción para trabajar con la pila (stack). El último que entra es el primero que sale LIFO
+
+Al hacer push rdi se guarda el valor de rdi en la pila:
+
+RSP = Stack pointer
+
+rdi ocupa 8 bytes, como la pila crece hacia direcciones más pequeñas, primero mueve RSP 8 bytes hacia abajo y luego escribe el valor
+```
+RSP = RSP - 8
+[RSP] = rdi
+```
+
+## Pop
+Instrucción para trabajar con la pila (stack). El último que entra es el primero que sale LIFO
+
+Al hacer pop rdi se recupera el valor de rdi de la pila:
+
+RSP = Stack pointer
+
+rdi ocupa 8 bytes, primero recupera el valor de RSP y lo escribe en rdi; como la pila crece hacia direcciones más pequeñas luego mueve RSP 8 bytes hacia arriba, no borra el valor de RSP
+```
+rdi = [RSP]
+RSP = RSP + 8
+```
 
 ## Llamadas a kernel
 Una system call (syscall) es la forma en la que un programa en modo usuario le pide al kernel que haga algo privilegiado porque tu programa normal no puede tocar directamente el sistema operativo ni el hardware. tu programa → syscall → kernel → hardware / recursos
@@ -458,31 +484,28 @@ char *ft_strdup(const char *s)
 
 ### rbx
 ft_strdup("hola");
+
 Antes de llamar a tu función, el programa podría tener: rbx = 123456
+
 Si haces: mov rbx, rdi
 	rbx = dirección de "hola"
+
 Cuando tu función termina, el programa que te llamó espera que rbx siga siendo: rbx = 123456
+
 Por eso rbx es callee-saved.
 Hay dos tipos de registros
 #### Caller-saved:
-rax
-rcx
-rdx
-rsi
-rdi
-r8
-r9
-r10
-r11
+Son registros que el caller (quien llama) debe guardar si quiere conservarlos. En System V AMD64, entre ellos están:
+
+rax | rcx | rdx | rsi | rdi | r8 | r9 | r10 | r11
+
 Una función puede destruirlos tranquilamente.
 
 #### Callee-saved:
-rbx
-rbp
-r12
-r13
-r14
-r15
+Son registros que la función llamada (callee) tiene obligación de preservar.
+
+rbx | rbp | r12 1| r13 | r14 | r15
+
 Si tu función los modifica, tiene que restaurarlos antes de hacer ret.
 
 

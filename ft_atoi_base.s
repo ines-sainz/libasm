@@ -2,11 +2,11 @@
 .global ft_atoi_base
 .extern ft_strlen
 
-ft_atoi_base:
-    jmp check_base
-
 check_base:
+    push rdi
+    mov rsi, rdi
     call ft_strlen
+    pop rdi
     cmp rax, 2
     jl error
     xor dl, dl
@@ -17,3 +17,6 @@ check_base:
 
         jmp loop1
     jmp loop
+
+ft_atoi_base:
+    jmp check_base

@@ -82,6 +82,7 @@ int ft_atoi_base(const char *str, char *base)
 	base_len = ft_strlen(base);
 	while (str[i])
 	{
+		printf("num(%i) = num(%i) * base_len(%i) + get_pos(%i)\n", (num * base_len + get_pos(str[i], base)), num, base_len, get_pos(str[i], base));
 		num = num * base_len + get_pos(str[i], base);
 		i++;
 	}
@@ -90,7 +91,7 @@ int ft_atoi_base(const char *str, char *base)
 
 int main()
 {
-	printf("%i\n", ft_atoi_base("12", "0123456789"));
-	printf("%i\n", ft_atoi_base("1000", "01"));
-	printf("%i\n", ft_atoi_base("12A", "0123456789ABCDEF"));
+	printf("%i\n\n", ft_atoi_base("12", "0123456789"));
+	printf("%i\n\n", ft_atoi_base("1000", "01"));
+	printf("%i\n\n", ft_atoi_base("12A", "0123456789ABCDEF"));
 }
