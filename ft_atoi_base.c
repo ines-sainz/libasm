@@ -22,7 +22,7 @@ int check_base(const char *str, char *base)
 	i = 0;
 	while (base[i])
 	{
-		if (base[i] == '+' || base[i] == '-')
+		if (base[i] == '+' || base[i] == '-' || base[i] == ' ')
 			return (1);
 		j = 0;
 		while (base[j])

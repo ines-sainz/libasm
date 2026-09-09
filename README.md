@@ -80,6 +80,33 @@ dl		low 8 bits
 👉 dl is the lowest 8 bits of rdx.
 ```
 
+char 8 bits --> 1 byte
+int 32 bits --> 4 bytes
+
+
+
+| Registro |  Tamaño | Partes que puedes usar               |
+| -------- | ------: | ------------------------------------ |
+| `RAX`    | 64 bits | `EAX` → 32, `AX` → 16, `AH`/`AL` → 8 |
+| `RBX`    | 64 bits | `EBX`, `BX`, `BH`/`BL`               |
+| `RCX`    | 64 bits | `ECX`, `CX`, `CH`/`CL`               |
+| `RDX`    | 64 bits | `EDX`, `DX`, `DH`/`DL`               |
+| `RSI`    | 64 bits | `ESI`, `SI`, `SIL`                   |
+| `RDI`    | 64 bits | `EDI`, `DI`, `DIL`                   |
+| `RBP`    | 64 bits | `EBP`, `BP`, `BPL`                   |
+| `RSP`    | 64 bits | `ESP`, `SP`, `SPL`                   |
+| `R8`     | 64 bits | `R8D`, `R8W`, `R8B`                  |
+| `R9`     | 64 bits | `R9D`, `R9W`, `R9B`                  |
+| `R10`    | 64 bits | `R10D`, `R10W`, `R10B`               |
+| `R11`    | 64 bits | `R11D`, `R11W`, `R11B`               |
+| `R12`    | 64 bits | `R12D`, `R12W`, `R12B`               |
+| `R13`    | 64 bits | `R13D`, `R13W`, `R13B`               |
+| `R14`    | 64 bits | `R14D`, `R14W`, `R14B`               |
+| `R15`    | 64 bits | `R15D`, `R15W`, `R15B`               |
+
+
+
+
 ## Instrucciones
 Las líneas están compuestas por una instrucción seguida por sus operadores. Intrucción destino, fuente.
 ### Movimiento de datos:
@@ -295,6 +322,39 @@ size_t	ft_strlen(const char *s)
 - 7 bytes
 - no modifica flags
 
+## bucles while
+```
+loop:
+    cmp byte ptr [rdi + rcx], 0
+    je end_loop
+
+    ; cuerpo del while
+
+    inc rcx
+    jmp loop
+
+end_loop:
+```
+
+## if(A)
+```
+cmp ...
+je error
+```
+
+## if(A && B)
+```
+cmp A
+jne no_error
+
+cmp B
+je no_error
+
+jmp error
+
+no_error:
+```
+
 ## FT_STRCPY
 ```
 char	*ft_strcpy(char *dest, char *src)
@@ -494,15 +554,15 @@ Cuando tu función termina, el programa que te llamó espera que rbx siga siendo
 
 Por eso rbx es callee-saved.
 Hay dos tipos de registros
-#### Caller-saved:
-Son registros que el caller (quien llama) debe guardar si quiere conservarlos. En System V AMD64, entre ellos están:
+#### Caller-saved: En System V x86-64
+Son registros que el caller (quien llama) debe guardar si quiere conservarlos. Si llamas a otra función, no puedes asumir que conservarán su valor. En System V AMD64, entre ellos están:
 
 rax | rcx | rdx | rsi | rdi | r8 | r9 | r10 | r11
 
 Una función puede destruirlos tranquilamente.
 
-#### Callee-saved:
-Son registros que la función llamada (callee) tiene obligación de preservar.
+#### Callee-saved: En System V x86-64
+Son registros que la función llamada (callee) tiene obligación de preservar. Si tu función utiliza esos registros, debe preservarlos y restaurarlos antes de regresar.
 
 rbx | rbp | r12 1| r13 | r14 | r15
 
@@ -522,3 +582,27 @@ Examples of invalid arguments:
 - The function should be prototyped as follows:
 
 int ft_atoi_base(char *str, char *base);
+
+- RDI → str
+- RSI → base
+- RCX → i
+- RDX → j
+- R8D → eq
+- RAX/EAX valores temporales / retorno
+- str[i] = RDI + i → str[i]
+- base[i] = RSI + i → base[i]
+- base[j] = RSI + j → base[j]
+
+
+| C           |  Assembly mental      |
+| ----------- | --------------------: |
+|str          | RDI                   |
+|base         | RSI                   |
+|i            | RCX                   |
+|j            | RDX                   |
+|eq           | R8D                   |
+|str[i]       | memoria en RDI + RCX  |
+|base[i]      | memoria en RSI + RCX  |
+|base[j]      | memoria en RSI + RDX  |
+|return (0/1) | EAX                   |
+
