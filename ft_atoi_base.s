@@ -78,11 +78,23 @@ jmp end_loop2_j:
     jmp loop2_i
 
 get_pos:
-    xor
+    xor r8d, r8d
     loop:
-        cmp 
-        ret
-        inc
+        cmp byte ptr [rsi + r8d], 0
+        je return_loop_pos1
+
+        cmp byte ptr [rsi + r8d], [rdi + rcx]
+        je return_loop_pos2
+        inc r8d
+        jmp loop
+
+
+return_loop_pos1:
+    mov eax, 0
+    ret
+
+return_loop_pos2:
+    mov eax, r8d
     ret
 
 ft_atoi_base:
@@ -90,16 +102,27 @@ ft_atoi_base:
 
     xor r9d, r9d
     xor rcx, rcx
+
     push rdi
     mov rdi, rsi
     call ft_strlen
     pop rdi
-    mov rax 
+    mov r10d, rax 
 
     loop:
-        inc
+        cmp byte ptr [rdi + rcx], 0
+        je return_number
+
+        imul r9d , r10d
+        jmp get_pos
+        add r9d, eax
+        inc rcx
     ret
 
 global_error:
     mov rax, 0
+    ret
+
+return_number:
+    mov rax, r9d
     ret
