@@ -606,3 +606,25 @@ int ft_atoi_base(char *str, char *base);
 |base[j]      | memoria en RSI + RDX  |
 |return (0/1) | EAX                   |
 
+
+| C / concepto         | Registro /memoria                       |
+| -------------------- | ---------------------------------------- |
+| `str`                | **RDI**                                  |
+| `base`               | **RSI**                                  |
+| `i`                  | **RCX**                                  |
+| `j`                  | **RDX**                                  |
+| `eq`                 | **R8D**                                  |
+| `num`                | **R9D**                                  |
+| `base_len`           | **R10D**                                 |
+| `str[i]`             | `[RDI + RCX]`                            |
+| `base[i]`            | `[RSI + RCX]`                            |
+| `base[j]`            | `[RSI + RDX]`                            |
+| `str[i] == base[j]`  | comparar `[RDI + RCX]` con `[RSI + RDX]` |
+| `base[i] == base[j]` | comparar `[RSI + RCX]` con `[RSI + RDX]` |
+| `i != j`             | comparar `RCX` con `RDX`                 |
+| `eq = 0`             | `xor R8D, R8D`                           |
+| `eq = 1`             | `mov R8D, 1`                             |
+| `num`                | `R9D`                                    |
+| `base_len`           | `R10D`                                   |
+| `return (0/1)`       | **EAX**                                  |
+| `get_pos(...)`       | **EAX** (valor devuelto por la función)  |

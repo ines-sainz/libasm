@@ -4,7 +4,7 @@
 
 check_base:
     push rdi
-    mov rsi, rdi
+    mov rdi, rsi
     call ft_strlen
     pop rdi
     cmp rax, 2
@@ -13,7 +13,6 @@ check_base:
     xor rcx, rcx
     loop1_i:
         cmp byte ptr [rdi + rcx], 0
-        xor rcx, rcx
         je loop2_i
 
         cmp byte ptr [rdi + rcx], '+'
@@ -25,25 +24,58 @@ check_base:
     
         xor rdx, rdx
         loop1_j:
+            cmp byte ptr [rdi + rdx], 0
+            je end_loop1_j
+
             cmp byte ptr [rdi + rcx], byte ptr [rdi + rdx]
-             global_error
-            cmp rcx
-            inc
-            inc
-        cmp
-        ret
+            jne return_loop1_j
+            cmp rcx, rdx
+            jne global_error
+
+            inc rdx
+            jmp loop1_j
 
         inc rcx
-        jmp loop
+        jmp loop1_i
 
-    loop2_i:
-        cmp byte ptr [rdi + rcx], 0
-        je leave_check_base
-        xor rdx, rdx
-        xor r8d, r8d
-        loop2_j:
+    loop2:
+        xor rcx, rcx
+        loop2_i:
+            cmp byte ptr [rdi + rcx], 0
+            je ret
+            
+            xor rdx, rdx
+            xor r8d, r8d
 
+            loop2_j:
+                cmp byte ptr [rsi + rdx], 0
+                jmp end_loop2_j
 
+                cmp byte ptr [rdi + rcx], byte ptr [rsi + rdx]
+                je update_eq
+                inc rdx
+                jmp loop2_j
+            
+            cmp eq, 0
+            je global_error
+
+            inc rcx
+            jmp loop2_i
+
+jmp end_loop1_j:
+    inc rcx
+    jmp loop1_i
+
+jmp return_loop1_j:
+    inc rdx
+    jmp loop1_j
+
+update_eq:
+    mov r8d, 1
+
+jmp end_loop2_j:
+    inc rcx
+    jmp loop2_i
 
 get_pos:
     xor
@@ -56,10 +88,10 @@ get_pos:
 ft_atoi_base:
     jmp check_base
 
-    xor 
-    xor
+    xor r9d, r9d
+    xor rcx, rcx
     push rdi
-    mov rsi, rdi
+    mov rdi, rsi
     call ft_strlen
     pop rdi
     mov rax 
