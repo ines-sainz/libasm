@@ -1,20 +1,9 @@
 #include <stdio.h>
-
-size_t	ft_strlen(const char *s)
-{
-	size_t	i;
-
-	i = 0;
-	if (!s)
-		return (0);
-	while (s[i])
-		i++;
-	return (i);
-}
+#include <string.h>
 
 int check_base(const char *str, char *base)
 {
-	if (ft_strlen(base) < 2)
+	if (strlen(base) < 2)
 		return (1);
 	int i;
 	int j;
@@ -69,7 +58,7 @@ int get_pos(char letter, char *base)
 	return (0);
 }
 
-int ft_atoi_base(const char *str, char *base)
+int ft_atoi_base1(const char *str, char *base)
 {
 	if (check_base(str, base) == 1)
 		return (0);
@@ -79,7 +68,7 @@ int ft_atoi_base(const char *str, char *base)
 
 	i = 0;
 	num = 0;
-	base_len = ft_strlen(base);
+	base_len = strlen(base);
 	while (str[i])
 	{
 		printf("num(%i) = num(%i) * base_len(%i) + get_pos(%i)\n", (num * base_len + get_pos(str[i], base)), num, base_len, get_pos(str[i], base));
@@ -89,9 +78,27 @@ int ft_atoi_base(const char *str, char *base)
 	return (num);
 }
 
-int main()
+int ft_atoi_base(const char *str, char *base);
+
+int main(void)
 {
-	printf("%i\n\n", ft_atoi_base("12", "0123456789"));
-	printf("%i\n\n", ft_atoi_base("1000", "01"));
-	printf("%i\n\n", ft_atoi_base("12A", "0123456789ABCDEF"));
+	printf("TEST 0: %s   %s\n", "12", "0123456789");
+    printf("ft_atoi_base1: %i\n", ft_atoi_base1("12", "0123456789"));
+    printf("ft_atoi_base: %i\n", ft_atoi_base("12", "0123456789"));
+
+	printf("-------------------------------\n");
+
+	printf("TEST 1: %s   %s\n", "12", "0123456789");
+    printf("ft_atoi_base1: %i\n", ft_atoi_base1("1000", "01"));
+    printf("ft_atoi_base: %i\n", ft_atoi_base("1000", "01"));
+
+	printf("-------------------------------\n");
+
+	printf("TEST 2: %s   %s\n", "12", "0123456789");
+    printf("ft_atoi_base1: %i\n", ft_atoi_base1("12A", "0123456789ABCDEF"));
+    printf("ft_atoi_base: %i\n", ft_atoi_base("12A", "0123456789ABCDEF"));
+
+	printf("-------------------------------\n");
+
+    return 0;
 }
