@@ -36,9 +36,6 @@ check_base:
             inc rdx
             jmp loop1_j
 
-        inc rcx
-        jmp loop1_i
-
     loop2:
         xor rcx, rcx
         loop2_i:
@@ -54,12 +51,6 @@ check_base:
                 call check_eq
                 inc rdx
                 jmp loop2_j
-            
-            cmp r8, 0
-            je error
-
-            inc rcx
-            jmp loop2_i
 
 end_loop1_j:
     inc rcx
@@ -80,6 +71,8 @@ update_eq:
     ret
 
 end_loop2_j:
+    cmp r8, 0
+    je error
     inc rcx
     jmp loop2_i
 
@@ -139,3 +132,5 @@ global_error:
 return_number:
     mov rax, r9
     ret
+
+.section .note.GNU-stack,"",@progbits
