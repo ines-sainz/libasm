@@ -110,7 +110,7 @@ int 32 bits --> 4 bytes
 ## Instrucciones
 Las líneas están compuestas por una instrucción seguida por sus operadores. Intrucción destino, fuente.
 ### Movimiento de datos:
-- mov: mover un valor a un registro
+- mov: mover un valor a un registro (mov DESTINO, ORIGEN)
 - push: añadir un valor a un stack
 - pop: saca un valor de un stack a un destino
 ### Operaciones aritméticas:

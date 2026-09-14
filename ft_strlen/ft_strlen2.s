@@ -14,3 +14,5 @@ ft_strlen:
 salir:
     mov rax, rcx
     ret
+
+.section .note.GNU-stack,"",@progbits
