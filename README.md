@@ -304,6 +304,8 @@ size_t	ft_strlen(const char *s)
 }
 ```
 
+(*s)++
+
 ### xor rcx, rcx
 - no necesita memoria
 - no depende de valores anteriores
@@ -628,3 +630,47 @@ int ft_atoi_base(char *str, char *base);
 | `base_len`           | `R10D`                                   |
 | `return (0/1)`       | **EAX**                                  |
 | `get_pos(...)`       | **EAX** (valor devuelto por la función)  |
+
+
+
+
+
+
+
+
+
+
+# GDB
+- Compilar: 
+	- gcc -g -no-pie -o test main.c ft_atoi_base.s
+- Entrar en GDB: 
+	- gdb ./test
+- Poner el break de inicio en ft_atoi_base: 
+	- break ft_atoi_base
+- Iniciar el programa:
+	- run
+- Ejecutar una instrucción cada vez:
+	- si (step instruction)
+- Comprobar todos los registros:
+	- info registers
+- Comprobar cada registro:
+	- p/x $rdi
+	- p/x $rsi
+	- p/x $rcx ($1 = 0x2 --> RCX = 2)
+	- p/x $rdx
+	- p/x $rax
+- Ver qué tiene rcx:
+	- p $rcx
+- Comprobar el carácter leido:
+	- p/c \*(char\*)($rsi + $rcx)
+- Mirar la memoria (ver las cadenas completas):
+	- x/s $rsi
+- Para ver bytes:
+	- x/10(cxbs)b $rsi 
+	- (c-->carácter, x-->hexadecimal, b-->byte, s-->string)
+- Para mirar los flags. Se pone después de cmp:
+	- info registers eflags
+- Desensamblar al rededor de donde estás:
+	- disassemble check_base
+- Ver el ensamblador mientras avanzas:
+	- layout asm
