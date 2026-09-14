@@ -13,7 +13,7 @@ check_base:
     xor rcx, rcx
     loop1_i:
         cmp byte ptr [rsi + rcx], 0
-        je loop2_i
+        je loop2
 
         cmp byte ptr [rsi + rcx], '+'
         je error
@@ -102,14 +102,14 @@ ft_atoi_base:
     cmp eax, 1
     je global_error
 
-    xor r9, r9
-    xor rcx, rcx
-
     push rdi
     mov rdi, rsi
     call ft_strlen
     pop rdi
     mov r10, rax 
+
+    xor r9, r9
+    xor rcx, rcx
 
     loop:
         cmp byte ptr [rdi + rcx], 0

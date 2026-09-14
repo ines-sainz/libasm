@@ -642,7 +642,7 @@ int ft_atoi_base(char *str, char *base);
 
 # GDB
 - Compilar: 
-	- gcc -g -no-pie -o test main.c ft_atoi_base.s
+	- gcc -g -no-pie ft_atoi_base.c ft_atoi_base.s ft_strlen/ft_strlen2.s -o test
 - Entrar en GDB: 
 	- gdb ./test
 - Poner el break de inicio en ft_atoi_base: 

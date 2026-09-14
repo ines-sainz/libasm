@@ -88,13 +88,13 @@ int main(void)
 
 	printf("-------------------------------\n");
 
-	printf("TEST 1: %s   %s\n", "12", "0123456789");
+	printf("TEST 1: %s   %s\n", "1000", "01");
     printf("ft_atoi_base1: %i\n", ft_atoi_base1("1000", "01"));
     printf("ft_atoi_base: %i\n", ft_atoi_base("1000", "01"));
 
 	printf("-------------------------------\n");
 
-	printf("TEST 2: %s   %s\n", "12", "0123456789");
+	printf("TEST 2: %s   %s\n", "12A", "0123456789ABCDEF");
     printf("ft_atoi_base1: %i\n", ft_atoi_base1("12A", "0123456789ABCDEF"));
     printf("ft_atoi_base: %i\n", ft_atoi_base("12A", "0123456789ABCDEF"));
 
