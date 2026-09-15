@@ -631,14 +631,64 @@ int ft_atoi_base(char *str, char *base);
 | `return (0/1)`       | **EAX**                                  |
 | `get_pos(...)`       | **EAX** (valor devuelto por la función)  |
 
+## FT_LIST_PUSH_FRONT
 
+t_list (16 bytes)
+	t_list -> data (puntero de 8 bytes, empiezas desde el 0)
+	t_list -> next (puntero de 8 bytes, empiezas desde el 8)
+malloc(t_list) = malloc(16)
 
+tmp = NULL --> tmp = 0 (una dirección nula se identifica con 0)
+tmp->data = data --> tmp + 0 = data
+tmp->next = NULL --> tmp + 8 = 0
 
+**list --> direción del nodo --> nodo --> data / next
+rdi = &lista <--> [rdi] = lista
 
+begin_list --> A --> [A]
+node --> [NEW]
+[NEW] --> [A]
+begin_list --> NEW --> [NEW] --> A --> [A]
 
+lista
+ │
+ ▼
+┌────────────────┐
+│ data ──────────┼──► "elemento2"
+│ next ───────────┼──────┐
+└────────────────┘      │
+                        ▼
+                   ┌────────────────┐
+                   │ data ──────────┼──► "elemento1"
+                   │ next = NULL    │
+                   └────────────────┘
 
-
-
+RDI = begin_list
+RSI = data
+       │
+guardar lo que necesite conservar
+       │
+preparar argumento para ft_create_elem
+       │
+llamar ft_create_elem
+       │
+RAX = node
+       │
+¿node == NULL?
+   ├── sí → return
+   └── no
+       │
+¿*begin_list == NULL?
+   ├── sí
+   │    │
+   │   *begin_list = node
+   └── no
+        │
+       node->next = *begin_list
+        │
+       *begin_list = node
+        │
+       return
 
 # GDB
 - Compilar: 

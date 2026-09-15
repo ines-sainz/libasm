@@ -1,6 +1,6 @@
 #include "bonus.h"
 
-t_list	*ft_create_elem(void *data)
+t_list	*ft_lstnew(void *data)
 {
 	t_list	*tmp;
 
@@ -15,7 +15,7 @@ t_list	*ft_create_elem(void *data)
 void	ft_list_push_front1(t_list **begin_list, void *data)
 {
 	t_list	*node;
-	node = ft_create_elem(data);
+	node = ft_lstnew(data);
 	if (node == NULL)
 		return ;
 	if (*begin_list == NULL)
