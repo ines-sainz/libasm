@@ -7,9 +7,30 @@ ft_list_push_front:
 	push rdi
 	mov rdi, rsi
 	call ft_lstnew
+	pop rdi
+	cmp rax, 0
+	je error
+	cmp [rdi], 0
+	je no_prev_nodes
+	mov [rax + 8], [rdi]
+	mov [rdi], rax
+	ret
 
 ft_lstnew:
+	mov rax, 16
+	call malloc
+	cmp rax, 0
+	je malloc_error
+	mov rax, rdi
+	mov [rax + 8], 0
+	ret
 
+no_prev_nodes:
+	mov [rdi], rax
+	ret
+
+malloc_error:
+	ret
 
 error:
 	mov rdi, 12
