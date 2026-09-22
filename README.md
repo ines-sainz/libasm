@@ -703,6 +703,24 @@ RAX = node
         │
        return
 
+## FT_LIST_SIZE
+```
+int	ft_list_size1(t_list *lst)
+{
+	int	i;
+
+	i = 0;
+	while (lst != NULL)
+	{
+		lst = lst->next;
+		i++;
+	}
+	return (i);
+}
+```
+rdi = list
+[rdi + 8] = list->next
+
 # GDB
 - Compilar: 
 	- gcc -g -no-pie ft_atoi_base.c ft_atoi_base.s ft_strlen/ft_strlen2.s -o test
