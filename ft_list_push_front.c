@@ -29,6 +29,8 @@ void	ft_list_push_front1(t_list **begin_list, void *data)
 	}
 }
 
+void ft_list_push_front(t_list **begin_list, void *data);
+
 int main()
 {
 	t_list	*lista;
@@ -45,5 +47,23 @@ int main()
 		tmp = lista;
 		lista = lista->next;
 		free(tmp);
+    }
+
+	printf("------------------\n");
+
+	t_list	*lista2;
+	t_list	*tmp2;
+
+	lista2 = NULL;
+
+	ft_list_push_front1(&lista2, "elemento1");
+    ft_list_push_front1(&lista2, "elemento2");
+
+	while (lista2 != NULL)
+    {
+        printf("Contenido: %s\n", (char *)lista2->data);
+		tmp2 = lista2;
+		lista2 = lista2->next;
+		free(tmp2);
     }
 }

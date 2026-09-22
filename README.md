@@ -80,10 +80,10 @@ dl		low 8 bits
 👉 dl is the lowest 8 bits of rdx.
 ```
 
-char 8 bits --> 1 byte
-int 32 bits --> 4 bytes
-
-
+char       →  8 bits → 1 byte  → byte ptr
+short      → 16 bits → 2 bytes → word ptr
+int        → 32 bits → 4 bytes → dword ptr
+puntero    → 64 bits → 8 bytes → qword ptr
 
 | Registro |  Tamaño | Partes que puedes usar               |
 | -------- | ------: | ------------------------------------ |
@@ -644,11 +644,24 @@ tmp->next = NULL --> tmp + 8 = 0
 
 **list --> direción del nodo --> nodo --> data / next
 rdi = &lista <--> [rdi] = lista
+RDI       = begin_list
+[RDI]     = *begin_list
 
 begin_list --> A --> [A]
 node --> [NEW]
 [NEW] --> [A]
 begin_list --> NEW --> [NEW] --> A --> [A]
+
+qword ptr significa 8 bytes
+Nombre	Bytes	Bits
+byte	1	8
+word	2	16
+dword	4	32
+qword	8	64
+
+Se usa 8 bytes porque son punteros:
+void *              → 8 bytes
+struct s_list *     → 8 bytes
 
 lista
  │

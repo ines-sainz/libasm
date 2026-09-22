@@ -10,10 +10,11 @@ ft_list_push_front:
 	pop rdi
 	cmp rax, 0
 	je error
-	cmp [rdi], 0
+	cmp qword ptr [rdi], 0
 	je no_prev_nodes
-	mov [rax + 8], [rdi]
-	mov [rdi], rax
+	mov rdx, qword ptr [rdi]
+    mov qword ptr [rax + 8], rdx
+	mov qword ptr [rdi], rax
 	ret
 
 ft_lstnew:
@@ -21,12 +22,12 @@ ft_lstnew:
 	call malloc
 	cmp rax, 0
 	je malloc_error
-	mov rax, rdi
-	mov [rax + 8], 0
+	mov qword ptr [rax], rdi
+	mov qword ptr [rax + 8], 0
 	ret
 
 no_prev_nodes:
-	mov [rdi], rax
+	mov qword ptr [rdi], rax
 	ret
 
 malloc_error:
@@ -35,9 +36,7 @@ malloc_error:
 error:
 	mov rdi, 12
 	call __errno_location
-	mov [rax], rdi # mov dword ptr [rax], edi (12 es un int, mueves solo 4 bytes en vez de 8)
-	xor rax, rax # xor eax, eax --> (eax = últimos 32 bits de rax) los pone a 0 y la CPU pone el resto (más rápido y habitual en compiladores)
-
-	pop rbx
+	mov dword ptr [rax], 12 # mov dword ptr [rax], edi (12 es un int, mueves solo 4 bytes en vez de 8)
+	xor eax, eax # --> (eax = últimos 32 bits de rax) los pone a 0 y la CPU pone el resto (más rápido y habitual en compiladores)
 	ret
 
