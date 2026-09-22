@@ -18,8 +18,10 @@ ft_list_push_front:
 	ret
 
 ft_lstnew:
-	mov rax, 16
+	push rdi
+	mov rdi, 16
 	call malloc
+	pop rdi
 	cmp rax, 0
 	je malloc_error
 	mov qword ptr [rax], rdi
