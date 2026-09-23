@@ -721,6 +721,57 @@ int	ft_list_size1(t_list *lst)
 rdi = list
 [rdi + 8] = list->next
 
+## FT_LIST_SORT
+```
+```
+rdi = begin_list
+[rdi] = *begin_list = node_1
+[node_1] = ->data
+[node_1 + 8] = ->next
+
+Para ordenar la lista intercambiamos el data de los nodos. No los movemos enteros.
+cmp(i->data, j->data)
+rsi = dirección de cmp
+call rsi
+
+i = A
+
+┌─────────────────────────────┐
+│                             │
+│  j = i->next                │
+│                             │
+│  ┌───────────────────────┐  │
+│  │                       │  │
+│  │ cmp(i->data, j->data) │  │
+│  │                       │  │
+│  │      > 0 ?            │  │
+│  │        │              │  │
+│  │       YES             │  │
+│  │        ↓              │  │
+│  │     swap data         │  │
+│  │                       │  │
+│  │ j = j->next           │  │
+│  │                       │  │
+│  └───────────────────────┘  │
+│                             │
+│  i = i->next                │
+│                             │
+└─────────────────────────────┘
+
+| C                  | Assembly mental |
+| ------------------ | --------------- |
+| `begin_list`       | `RDI`           |
+| `cmp`              | `RSI`           |
+| `node`             | `r8`            |
+| `next_node`        | `r9`            |
+| `node->data`       | `[r8 + 0]`      |
+| `node->next`       | `[r8 + 8]`      |
+| `next_node->data`  | `[r9 + 0]`      |
+| `next_node->next`  | `[r9 + 8]`      |
+| resultado de `cmp` | `EAX`           |
+
+
+
 # GDB
 - Compilar: 
 	- gcc -g -no-pie ft_atoi_base.c ft_atoi_base.s ft_strlen/ft_strlen2.s -o test

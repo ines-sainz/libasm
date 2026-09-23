@@ -1,4 +1,6 @@
 #include "bonus.h"
+#include <stdio.h>
+#include <stdlib.h>
 
 t_list	*ft_lstnew(void *data)
 {
@@ -9,141 +11,183 @@ t_list	*ft_lstnew(void *data)
 		return (NULL);
 	tmp->data = data;
 	tmp->next = NULL;
-	return tmp;
+	return (tmp);
 }
 
 void	ft_list_push_front1(t_list **begin_list, void *data)
 {
 	t_list	*node;
+
 	node = ft_lstnew(data);
 	if (node == NULL)
 		return ;
-	if (*begin_list == NULL)
-	{
-		*begin_list = node;
-	}
-	else
-	{
-		node->next = *begin_list;
-		*begin_list = node;
-	}
+	node->next = *begin_list;
+	*begin_list = node;
 }
 
 int	ft_strcmp(char *s1, char *s2)
 {
 	int	i;
-	int	c;
 
-	c = 0;
 	i = 0;
 	while (s1[i] != '\0' || s2[i] != '\0')
 	{
 		if (s1[i] != s2[i])
-		{
 			return (s1[i] - s2[i]);
-		}
 		i++;
 	}
 	return (0);
 }
 
-void	ft_sort_int_tab(int *tab, int size)
+void	ft_list_sort1(t_list **begin_list, int (*cmp)())
 {
-	int	c;
-	int	i;
-	int	j;
+	t_list	*node;
+	t_list	*next_node;
+	void	*tmp;
 
-	i = 0;
-	while (i < size - 1)
+	if (!begin_list || !*begin_list || !cmp)
+		return ;
+	node = *begin_list;
+	while (node)
 	{
-		j = 0;
-		while (j < size)
+		next_node = node->next;
+		while (next_node)
 		{
-			if (tab[i] > tab[i + 1])
+			if (cmp(node->data, next_node->data) > 0)
 			{
-				c = tab[i];
-				tab[i] = tab[i + 1];
-				tab[i + 1] = c;
+				tmp = node->data;
+				node->data = next_node->data;
+				next_node->data = tmp;
 			}
-			j++;
+			next_node = next_node->next;
 		}
-		i++;
+		node = node->next;
 	}
 }
 
-void	ft_sort_int_tab(int *tab, int size)
+static void	print_list(char *name, t_list *list)
 {
-	int	c;
-	int	i;
-
-	i = 0;
-	while (i < size)
+	printf("%s: ", name);
+	while (list)
 	{
-		if (tab[i] > tab[i + 1])
-		{
-			c = tab[i];
-			tab[i] = tab[i + 1];
-			tab[i + 1] = c;
-		}
-		i++;
+		printf("\"%s\"", (char *)list->data);
+		if (list->next)
+		printf(" -> ");
+		list = list->next;
 	}
+	printf("\n");
 }
 
-
-int	ft_list_sort1(t_list **begin_list, int (*cmp)())
+static void	free_list(t_list *list)
 {
-	int	i;
-
-	i = 0;
-	while (lst != NULL)
+	t_list	*tmp;
+	
+	while (list)
 	{
-		lst = lst->next;
-		i++;
+		tmp = list;
+		list = list->next;
+		free(tmp);
 	}
-	return (i);
 }
 
-void ft_list_sort(t_list **begin_list, int (*cmp)());
+void	ft_list_sort(t_list **begin_list, int (*cmp)());
 
-int main()
+int	main(void)
 {
 	t_list	*lista;
-	t_list	*tmp;
+	t_list	*lista2;
+
 	lista = NULL;
+	lista2 = NULL;
 
-    printf("TEST 0: lista = NULL\n");
-    printf("ft_list_size1: %u\n", ft_list_size1(lista));
-    printf("ft_list_size : %u\n", ft_list_size(lista));
+	printf("\nTEST 0: lista = NULL\n");
 
-	printf("-------------------------------\n");
+	ft_list_sort1(&lista, ft_strcmp);
+	ft_list_sort(&lista2, ft_strcmp);
+
+	print_list("sort1", lista);
+	print_list("sort ", lista2);
+
+	printf("\nTEST 1\n");
 
 	ft_list_push_front1(&lista, "elemento1");
+	ft_list_push_front1(&lista2, "elemento1");
 
-    printf("TEST 1: lista --> elemento1\n");
-    printf("ft_list_size1: %u\n", ft_list_size1(lista));
-    printf("ft_list_size : %u\n", ft_list_size(lista));
+	print_list("antes sort1", lista);
+	print_list("antes sort ", lista2);
 
-	printf("-------------------------------\n");
+	ft_list_sort1(&lista, ft_strcmp);
+	ft_list_sort(&lista2, ft_strcmp);
 
-    ft_list_push_front1(&lista, "elemento2\n");
+	print_list("despues sort1", lista);
+	print_list("despues sort ", lista2);
 
-    printf("TEST 2: lista --> elemento2 --> elemento1\n");
-    printf("ft_list_size1: %u\n", ft_list_size1(lista));
-    printf("ft_list_size : %u\n", ft_list_size(lista));
+	printf("\nTEST 2\n");
 
-	printf("-------------------------------\n");
+	ft_list_push_front1(&lista, "elemento2");
+	ft_list_push_front1(&lista2, "elemento2");
 
-    for (int i = 0; i < 5; i++)
-        ft_list_push_front1(&lista, "elemento3");
+	print_list("antes sort1", lista);
+	print_list("antes sort ", lista2);
 
-    printf("TEST 3: lista with 7 elements\n");
-    printf("ft_list_size1: %u\n", ft_list_size1(lista));
-    printf("ft_list_size : %u\n", ft_list_size(lista));
+	ft_list_sort1(&lista, ft_strcmp);
+	ft_list_sort(&lista2, ft_strcmp);
 
-	while (lista != NULL)
-    {
-		tmp = lista;
-		lista = lista->next;
-		free(tmp);
-    }
+	print_list("despues sort1", lista);
+	print_list("despues sort ", lista2);
+
+	printf("\nTEST 3\n");
+
+	ft_list_push_front1(&lista, "elemento3");
+	ft_list_push_front1(&lista, "elemento3");
+	ft_list_push_front1(&lista, "elemento3");
+
+	ft_list_push_front1(&lista2, "elemento3");
+	ft_list_push_front1(&lista2, "elemento3");
+	ft_list_push_front1(&lista2, "elemento3");
+
+	print_list("antes sort1", lista);
+	print_list("antes sort ", lista2);
+
+	ft_list_sort1(&lista, ft_strcmp);
+	ft_list_sort(&lista2, ft_strcmp);
+
+	print_list("despues sort1", lista);
+	print_list("despues sort ", lista2);
+
+	printf("\nTEST 4\n");
+
+	ft_list_push_front1(&lista, "zelemento4");
+	ft_list_push_front1(&lista, "relemento4");
+	ft_list_push_front1(&lista, "lelemento4");
+	ft_list_push_front1(&lista, "Aelemento4");
+	ft_list_push_front1(&lista, "aelemento4");
+
+	ft_list_push_front1(&lista2, "zelemento4");
+	ft_list_push_front1(&lista2, "relemento4");
+	ft_list_push_front1(&lista2, "lelemento4");
+	ft_list_push_front1(&lista2, "Aelemento4");
+	ft_list_push_front1(&lista2, "aelemento4");
+
+	print_list("antes sort1", lista);
+	print_list("antes sort ", lista2);
+
+	ft_list_sort1(&lista, ft_strcmp);
+	ft_list_sort(&lista2, ft_strcmp);
+
+	print_list("despues sort1", lista);
+	print_list("despues sort ", lista2);
+
+	printf("\nTEST 5\n");
+
+	ft_list_sort1(&lista, ft_strcmp);
+	ft_list_sort(&lista2, ft_strcmp);
+
+	print_list("sort1", lista);
+	print_list("sort ", lista2);
+
+	free_list(lista);
+	free_list(lista2);
+
+	return (0);
 }
