@@ -351,37 +351,3 @@ int	main(void)
 
 	return (0);
 }
-
-// void	ft_list_remove_if(t_list **begin_list, void *data_ref,
-// 		int (*cmp)(), void (*free_fct)(void *))
-// {
-// 	t_list	*tmp;
-
-// 	if (begin_list == NULL || *begin_list == NULL)
-// 		return ;
-
-// 	while (*begin_list != NULL && (*cmp)((*begin_list)->data, data_ref) == 0)
-// 	{
-// 		tmp = *begin_list;
-// 		*begin_list = (*begin_list)->next;
-// 		(*free_fct)(tmp->data);
-// 		free(tmp);
-// 	}
-
-// 	tmp = *begin_list;
-// 	while (tmp != NULL && tmp->next != NULL)
-// 	{
-// 		if ((*cmp)(tmp->next->data, data_ref) == 0)
-// 		{
-// 			{
-// 				t_list *to_delete = tmp->next;
-
-// 				tmp->next = to_delete->next;
-// 				(*free_fct)(to_delete->data);
-// 				free(to_delete);
-// 			}
-// 		}
-// 		else
-// 			tmp = tmp->next;
-// 	}
-// }
