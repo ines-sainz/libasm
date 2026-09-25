@@ -770,7 +770,45 @@ i = A
 | `next_node->next`  | `[r9 + 8]`      |
 | resultado de `cmp` | `EAX`           |
 
+## FT_LIST_REMOVE_IF
 
+| C                  | Assembly mental |
+| ------------------ | --------------- |
+| `begin_list`       | `RDI`           |
+| `data_ref`         | `RSI` --> `R13` |
+| `cmp`              | `RDX` --> `R14` |
+| `free_fct`         | `RCX` --> `R15` |
+| `current`          | `R12`           |
+| `tmp`              | `RBX`           |
+| `*current`         | `[R12]`         |
+| `*current`         | `[R9]`          |
+| `(*current)->data` | `[[R12] + 0]`   |
+| `(*current)->next` | `[[R12] + 8]`   |
+| `tmp->data`        | `[RBX + 0]`     |
+| `tmp->next`        | `[RBX + 8]`     |
+| resultado de `cmp` | `EAX`           |
+
+
+*current = [R8] y contiene la dirección del nodo actual.
+
+(*current)->data
+R8
+ ↓
+[R8] ───────> nodo
+                |
+                +---- data
+
+Primero obtienes el nodo y después accedes a data.
+mov r9, [r8]       ; r9 = *current
+mov rax, [r9]      ; rax = (*current)->data
+
+current = &(*current)->next; se traduce, con current = R8, a:
+lea r8, [r8 + 8]
+
+*current = (*current)->next; sería:
+mov rax, [r8]
+mov rax, [rax + 8]
+mov [r8], rax
 
 # GDB
 - Compilar: 
