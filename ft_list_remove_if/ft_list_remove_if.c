@@ -113,7 +113,7 @@ static void	test_empty_list(void)
 	free_list(list2);
 }
 
-static void	test_remove_first(void)
+static void	test_remove_except_first(void)
 {
 	t_list	*list1;
 	t_list	*list2;
@@ -175,7 +175,7 @@ static void	test_remove_middle(void)
 	free_list(list2);
 }
 
-static void	test_remove_last(void)
+static void	test_remove_first(void)
 {
 	t_list	*list1;
 	t_list	*list2;
@@ -341,9 +341,9 @@ static void	test_no_match(void)
 int	main(void)
 {
 	test_empty_list();
-	test_remove_first();
+	test_remove_except_first();
 	test_remove_middle();
-	test_remove_last();
+	test_remove_first();
 	test_remove_multiple();
 	test_remove_consecutive();
 	test_remove_all();
