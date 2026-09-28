@@ -47,11 +47,11 @@ bonus: $(OBJSBONUS)
 
 # Remove all compiled object files
 clean:
-	@rm -f $(OBJS) $(OBJSBONUS)
+	rm -f $(OBJS) $(OBJSBONUS)
 
 # Clean everything, including the library file
 fclean: clean
-	@rm -f $(NAME)
+	rm -f $(NAME) test.txt
 
 # Rebuild everything from scratch
 re: fclean all
@@ -60,50 +60,55 @@ re: fclean all
 # -L.   busca librerías en el directorio actual.
 # -lasm enlaza libasm.a.
 test: re bonus
-	@rm -f test.txt
+	@rm -f test.txt .temp_test
+	@echo "Ejecutando tests... (los resultados se guardarán en test.txt)"
+	
+	@echo "===== ft_strlen ====="
 	@echo "===== ft_strlen =====" >> test.txt
-	@gcc ft_strlen/main_strlen.c -L. -lasm -o test_strlen
-	@./test_strlen >> test.txt
-
+	@gcc ft_strlen/main_strlen.c -L. -lasm -o .temp_test && ./.temp_test >> test.txt
+	
+	@echo "===== ft_strcpy ====="
 	@echo "===== ft_strcpy =====" >> test.txt
-	@gcc ft_strcpy/main_strcpy.c -L. -lasm -o test_strcpy
-	@./test_strcpy >> test.txt
-
+	@gcc ft_strcpy/main_strcpy.c -L. -lasm -o .temp_test && ./.temp_test >> test.txt
+	
+	@echo "===== ft_strcmp ====="
 	@echo "===== ft_strcmp =====" >> test.txt
-	@gcc ft_strcmp/main_strcmp.c -L. -lasm -o test_strcmp
-	@./test_strcmp >> test.txt
-
+	@gcc ft_strcmp/main_strcmp.c -L. -lasm -o .temp_test && ./.temp_test >> test.txt
+	
+	@echo "===== ft_write ====="
 	@echo "===== ft_write =====" >> test.txt
-	@gcc ft_write/main_write.c -L. -lasm -o test_write
-	@./test_write >> test.txt
-
+	@gcc ft_write/main_write.c -L. -lasm -o .temp_test && ./.temp_test >> test.txt
+	
+	@echo "===== ft_read ====="
 	@echo "===== ft_read =====" >> test.txt
-	@gcc ft_read/main_read.c -L. -lasm -o test_read
-	@./test_read >> test.txt
-
+	@gcc ft_read/main_read.c -L. -lasm -o .temp_test && ./.temp_test >> test.txt
+	
+	@echo "===== ft_strdup ====="
 	@echo "===== ft_strdup =====" >> test.txt
-	@gcc ft_strdup/main_strdup.c -L. -lasm -o test_strdup
-	@./test_strdup >> test.txt
-
+	@gcc ft_strdup/main_strdup.c -L. -lasm -o .temp_test && ./.temp_test >> test.txt
+	
+	@echo "===== ft_atoi_base ====="
 	@echo "===== ft_atoi_base =====" >> test.txt
-	@gcc ft_atoi_base/main_atoi_base.c -L. -lasm -o test_atoi_base
-	@./test_atoi_base >> test.txt
-
+	@gcc ft_atoi_base/main_atoi_base.c -L. -lasm -o .temp_test && ./.temp_test >> test.txt
+	
+	@echo "===== ft_list_push_front ====="
 	@echo "===== ft_list_push_front =====" >> test.txt
-	@gcc ft_list_push_front/main_list_push_front.c -L. -lasm -o test_list_push_front
-	@./test_list_push_front >> test.txt
-
+	@gcc ft_list_push_front/main_list_push_front.c -L. -lasm -o .temp_test && ./.temp_test >> test.txt
+	
+	@echo "===== ft_list_size ====="
 	@echo "===== ft_list_size =====" >> test.txt
-	@gcc ft_list_size/main_list_size.c -L. -lasm -o test_list_size
-	@./test_list_size >> test.txt
-
+	@gcc ft_list_size/main_list_size.c -L. -lasm -o .temp_test && ./.temp_test >> test.txt
+	
+	@echo "===== ft_list_sort ====="
 	@echo "===== ft_list_sort =====" >> test.txt
-	@gcc ft_list_sort/main_list_sort.c -L. -lasm -o test_list_sort
-	@./test_list_sort >> test.txt
-
+	@gcc ft_list_sort/main_list_sort.c -L. -lasm -o .temp_test && ./.temp_test >> test.txt
+	
+	@echo "===== ft_list_remove_if ====="
 	@echo "===== ft_list_remove_if =====" >> test.txt
-	@gcc ft_list_remove_if/main_list_remove_if.c -L. -lasm -o test_list_remove_if
-	@./test_list_remove_if >> test.txt
+	@gcc ft_list_remove_if/main_list_remove_if.c -L. -lasm -o .temp_test && ./.temp_test >> test.txt
+	
+	@rm -f .temp_test
+	@echo "¡Tests completados con éxito!"
 
 # Declare these targets as phony to avoid conflicts with files of the same name
 .PHONY: clean fclean re all bonus test

@@ -13,3 +13,5 @@ ft_strlen:
 end:
     mov rax, rcx
     ret
+
+.section .note.GNU-stack,"",@progbits

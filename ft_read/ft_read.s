@@ -19,3 +19,5 @@ error:
 	mov [rax], rdi
 	mov rax, -1
 	ret
+
+.section .note.GNU-stack,"",@progbits

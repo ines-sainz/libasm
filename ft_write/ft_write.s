@@ -7,3 +7,5 @@ ft_write:
 	syscall
 
 	ret
+
+.section .note.GNU-stack,"",@progbits

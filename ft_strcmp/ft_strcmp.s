@@ -23,3 +23,5 @@ salir:
 	movzx rdx, dl
 	sub rax, rdx
 	ret
+
+.section .note.GNU-stack,"",@progbits

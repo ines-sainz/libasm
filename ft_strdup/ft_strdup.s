@@ -34,3 +34,5 @@ error:
 
 	pop rbx
 	ret
+
+.section .note.GNU-stack,"",@progbits
