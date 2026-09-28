@@ -287,7 +287,7 @@ C y ASM generan el mismo binario ELF
 ## Librería
 - `gcc -c programa.s`
 - `ar -rcs libasm.a programas.o`
-- `gcc main.c -L. libasm.a -lmath`
+- `gcc main.c -L. libasm.a`
 
 ## FT_STRLEN
 ```

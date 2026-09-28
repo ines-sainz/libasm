@@ -1,4 +1,4 @@
-#include "bonus.h"
+#include "../bonus.h"
 #include <stdio.h>
 #include <stdlib.h>
 

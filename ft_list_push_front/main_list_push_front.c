@@ -1,4 +1,4 @@
-#include "bonus.h"
+#include "../bonus.h"
 
 t_list	*ft_lstnew(void *data)
 {
