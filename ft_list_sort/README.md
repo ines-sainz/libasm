@@ -8,14 +8,36 @@ La siguiente tabla muestra la correspondencia conceptual entre C y Ensamblador. 
 
 | Concepto en C | Registro (Tu código) | Registro Seguro (Corregido) | Explicación |
 | --- | --- | --- | --- |
-| `t_list **begin_list` | `rdi` | `rdi` | Puntero a la cabeza de la lista. |
-| `int (*cmp)()` | `rsi` | `r13` | Puntero a la función de comparación. |
-| `t_list *i` (outer loop) | `r8` | `rbx` | Nodo actual (bucle externo). |
-| `t_list *j` (inner loop) | `r9` | `r12` | Nodo a comparar (bucle interno). |
-| `i->data` | `[r8]` | `[rbx]` | Primeros 8 bytes del struct del nodo actual. |
-| `j->next` | `[r9 + 8]` | `[r12 + 8]` | Últimos 8 bytes del struct (puntero al siguiente nodo). |
-| `cmp(i->data, j->data)` | `call [rsp]` | `call r13` | Llama a la función de comparación. |
-| `swap(data1, data2)` | `swap_datas` | bloque `swap` | Intercambia valores si `cmp` devuelve `> 0`. |
+| `t_list **begin_list`     | `rdi`         | `rdi` | Puntero a la cabeza de la lista. |
+| `int (*cmp)()`            | `rsi`         | `r13` | Puntero a la función de comparación. |
+| `t_list *i` (outer loop)  | `r8`          | `rbx` | Nodo actual (bucle externo). |
+| `t_list *j` (inner loop)  | `r9`          | `r12` | Nodo a comparar (bucle interno). |
+| `i->data`                 | `[r8]`        | `[rbx]` | Primeros 8 bytes del struct del nodo actual. |
+| `j->next`                 | `[r9 + 8]`    | `[r12 + 8]` | Últimos 8 bytes del struct (puntero al siguiente nodo). |
+| `cmp(i->data, j->data)`   | `call [rsp]`  | `call r13` | Llama a la función de comparación. |
+| `swap(data1, data2)`      | `swap_datas`  | bloque `swap` | Intercambia valores si `cmp` devuelve `> 0`. |
+
+
+| Concepto en C                      | Registro (Tu código) | Registro Seguro (Corregido) | Explicación                                                                                                           |
+| ---------------------------------- | -------------------- | --------------------------- | --------------------------------------------------------------------------------------------------------------------- |
+| `t_list **begin_list`              | `rdi`                | `rdi`                       | Puntero a la cabeza de la lista. Se usa al principio para las comprobaciones.                                         |
+| `int (*cmp)()`                     | `rsi`                | `r13`                       | Puntero a la función de comparación. Se mueve a `r13` porque `rsi` se necesita después para pasar argumentos a `cmp`. |
+| `t_list *node` (outer loop)        | —                    | `rbx`                       | Nodo actual del bucle externo. Se inicializa con `*begin_list`.                                                       |
+| `t_list *next_node` (inner loop)   | —                    | `r12`                       | Nodo que se compara con `node` en el bucle interno.                                                                   |
+| `node->data`                       | `[rbx]`              | `[rbx]`                     | Primer campo de `t_list`: puntero `data`, offset `0`.                                                                 |
+| `node->next`                       | `[rbx + 8]`          | `[rbx + 8]`                 | Segundo campo de `t_list`: puntero `next`, offset `8`.                                                                |
+| `next_node->data`                  | `[r12]`              | `[r12]`                     | Primer campo de `next_node`: puntero `data`, offset `0`.                                                              |
+| `next_node->next`                  | `[r12 + 8]`          | `[r12 + 8]`                 | Segundo campo de `next_node`: puntero `next`, offset `8`.                                                             |
+| Primer argumento de `cmp`          | `rdi`                | `rdi`                       | Contiene `node->data` justo antes de llamar a `cmp`.                                                                  |
+| Segundo argumento de `cmp`         | `rsi`                | `rsi`                       | Contiene `next_node->data` justo antes de llamar a `cmp`.                                                             |
+| `cmp(node->data, next_node->data)` | `call r13`           | `call r13`                  | `r13` contiene la dirección de la función `cmp`.                                                                      |
+| Resultado de `cmp`                 | `eax`                | `eax`                       | `cmp` devuelve un `int` en `eax`. Se comprueba con `cmp eax, 0`.                                                      |
+| `tmp` del `swap`                   | `r10`                | `r10`                       | Guarda temporalmente `node->data`.                                                                                    |
+| Segundo temporal del `swap`        | `r11`                | `r11`                       | Guarda temporalmente `next_node->data`.                                                                               |
+| `node->data = next_node->data`     | `[rbx]`              | `[rbx]`                     | Se escribe el nuevo `data` del nodo actual.                                                                           |
+| `next_node->data = node->data`     | `[r12]`              | `[r12]`                     | Se escribe el `data` antiguo de `node` en `next_node`.                                                                |
+
+
 
 ---
 

@@ -65,48 +65,81 @@ test: re bonus
 	
 	@echo "===== ft_strlen ====="
 	@echo "===== ft_strlen =====" >> test.txt
+	@sleep 2
 	@gcc ft_strlen/main_strlen.c -L. -lasm -o .temp_test && ./.temp_test >> test.txt
 	
+	@sleep 2
+
 	@echo "===== ft_strcpy ====="
-	@echo "===== ft_strcpy =====" >> test.txt
+	@echo "\n\n===== ft_strcpy =====" >> test.txt
+	@sleep 2
 	@gcc ft_strcpy/main_strcpy.c -L. -lasm -o .temp_test && ./.temp_test >> test.txt
 	
+	@sleep 2
+	
 	@echo "===== ft_strcmp ====="
-	@echo "===== ft_strcmp =====" >> test.txt
+	@echo "\n\n===== ft_strcmp =====" >> test.txt
+	@sleep 2
 	@gcc ft_strcmp/main_strcmp.c -L. -lasm -o .temp_test && ./.temp_test >> test.txt
 	
+	@sleep 2
+
 	@echo "===== ft_write ====="
-	@echo "===== ft_write =====" >> test.txt
+	@echo "\n\n===== ft_write =====" >> test.txt
+	@sleep 2
 	@gcc ft_write/main_write.c -L. -lasm -o .temp_test && ./.temp_test >> test.txt
 	
+	@sleep 2
+
 	@echo "===== ft_read ====="
-	@echo "===== ft_read =====" >> test.txt
+	@echo "\n\n===== ft_read =====" >> test.txt
+	@sleep 2
 	@gcc ft_read/main_read.c -L. -lasm -o .temp_test && ./.temp_test >> test.txt
 	
+	@sleep 2
+
 	@echo "===== ft_strdup ====="
-	@echo "===== ft_strdup =====" >> test.txt
+	@echo "\n\n===== ft_strdup =====" >> test.txt
+	@sleep 2
 	@gcc ft_strdup/main_strdup.c -L. -lasm -o .temp_test && ./.temp_test >> test.txt
-	
+
+	@sleep 2
+
 	@echo "===== ft_atoi_base ====="
-	@echo "===== ft_atoi_base =====" >> test.txt
+	@echo "\n\n===== ft_atoi_base =====" >> test.txt
+	@sleep 2
 	@gcc ft_atoi_base/main_atoi_base.c -L. -lasm -o .temp_test && ./.temp_test >> test.txt
 	
+	@sleep 2
+
 	@echo "===== ft_list_push_front ====="
-	@echo "===== ft_list_push_front =====" >> test.txt
+	@echo "\n\n===== ft_list_push_front =====" >> test.txt
+	@sleep 2
 	@gcc ft_list_push_front/main_list_push_front.c -L. -lasm -o .temp_test && ./.temp_test >> test.txt
-	
+
+	@sleep 2
+
 	@echo "===== ft_list_size ====="
-	@echo "===== ft_list_size =====" >> test.txt
+	@echo "\n\n===== ft_list_size =====" >> test.txt
+	@sleep 2
 	@gcc ft_list_size/main_list_size.c -L. -lasm -o .temp_test && ./.temp_test >> test.txt
-	
+
+	@sleep 2
+
 	@echo "===== ft_list_sort ====="
-	@echo "===== ft_list_sort =====" >> test.txt
+	@echo "\n\n===== ft_list_sort =====" >> test.txt
+	@sleep 2
 	@gcc ft_list_sort/main_list_sort.c -L. -lasm -o .temp_test && ./.temp_test >> test.txt
-	
+
+	@sleep 2
+
 	@echo "===== ft_list_remove_if ====="
-	@echo "===== ft_list_remove_if =====" >> test.txt
+	@echo "\n\n===== ft_list_remove_if =====" >> test.txt
+	@sleep 2
 	@gcc ft_list_remove_if/main_list_remove_if.c -L. -lasm -o .temp_test && ./.temp_test >> test.txt
-	
+
+	@sleep 2
+
 	@rm -f .temp_test
 	@echo "¡Tests completados con éxito!"
 
