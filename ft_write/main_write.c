@@ -20,29 +20,36 @@ int	main(void)
     dprintf(fd, "TEST 0 - escribir \"Hola\"\n");
 
     ret_ft = ft_write(fd, "Hola\n", 5);
-    ret_real = write(fd, "Hola\n", 5);
-
+	dprintf(fd, ", errno = %d (%s)", errno, strerror(errno));
     dprintf(fd, "     ft_write: %ld\n", ret_ft);
+
+    ret_real = write(fd, "Hola\n", 5);
+	dprintf(fd, ", errno = %d (%s)", errno, strerror(errno));
     dprintf(fd, "     write   : %ld\n", ret_real);
 
     dprintf(fd, "-------------------------------\n");
 
     dprintf(fd, "TEST 1 - escribir una letra\n");
 
-    ret_ft = ft_write(fd, "A\n", 2);
-    ret_real = write(fd, "A\n", 2);
-
+    ret_ft = ft_write(fd, "A", 1);
+	dprintf(fd, ", errno = %d (%s)", errno, strerror(errno));
     dprintf(fd, "     ft_write: %ld\n", ret_ft);
+
+    ret_real = write(fd, "A", 1);
+	dprintf(fd, ", errno = %d (%s)", errno, strerror(errno));
     dprintf(fd, "     write   : %ld\n", ret_real);
+
 
     dprintf(fd, "-------------------------------\n");
 
     dprintf(fd, "TEST 2 - escribir menos caracteres que el string\n");
 
     ret_ft = ft_write(fd, "Patatas\n", 4);
-    ret_real = write(fd, "Patatas\n", 4);
-
+	dprintf(fd, ", errno = %d (%s)", errno, strerror(errno));
     dprintf(fd, "     ft_write: %ld\n", ret_ft);
+
+    ret_real = write(fd, "Patatas\n", 4);
+	dprintf(fd, ", errno = %d (%s)", errno, strerror(errno));
     dprintf(fd, "     write   : %ld\n", ret_real);
 
     dprintf(fd, "-------------------------------\n");
@@ -50,9 +57,11 @@ int	main(void)
     dprintf(fd, "TEST 3 - count = 0\n");
 
     ret_ft = ft_write(fd, "Esto no se escribe\n", 0);
-    ret_real = write(fd, "Esto tampoco\n", 0);
-
+	dprintf(fd, ", errno = %d (%s)", errno, strerror(errno));
     dprintf(fd, "     ft_write: %ld\n", ret_ft);
+
+    ret_real = write(fd, "Esto tampoco\n", 0);
+	dprintf(fd, ", errno = %d (%s)", errno, strerror(errno));
     dprintf(fd, "     write   : %ld\n", ret_real);
 
     dprintf(fd, "-------------------------------\n");
@@ -60,14 +69,51 @@ int	main(void)
     dprintf(fd, "TEST 4 - escribir una frase\n");
 
     ret_ft = ft_write(fd, "Hola desde libasm\n", 18);
-    ret_real = write(fd, "Hola desde libasm\n", 18);
-
+	dprintf(fd, ", errno = %d (%s)", errno, strerror(errno));
     dprintf(fd, "     ft_write: %ld\n", ret_ft);
+
+    ret_real = write(fd, "Hola desde libasm\n", 18);
+	dprintf(fd, ", errno = %d (%s)", errno, strerror(errno));
+    dprintf(fd, "     write   : %ld\n", ret_real);
+
+    dprintf(fd, "-------------------------------\n");
+
+	dprintf(fd, "TEST 5 - fd incorrecto (-1)\n");
+
+	ret_ft = ft_write(-1, "ERROR TEST\n", 11);
+	dprintf(fd, ", errno = %d (%s)", errno, strerror(errno));
+    dprintf(fd, "     ft_write: %ld\n", ret_ft);
+
+	ret_real = write(-1, "ERROR TEST\n", 11);
+	dprintf(fd, ", errno = %d (%s)", errno, strerror(errno));
+    dprintf(fd, "     write   : %ld\n", ret_real);
+
+    dprintf(fd, "-------------------------------\n");
+	
+	dprintf(fd, "TEST 6 - string vacio con count = 0\n");
+
+	ret_ft = ft_write(fd, "", 0);
+	dprintf(fd, ", errno = %d (%s)", errno, strerror(errno));
+    dprintf(fd, "     ft_write: %ld\n", ret_ft);
+
+	ret_real = write(fd, "", 0);
+	dprintf(fd, ", errno = %d (%s)", errno, strerror(errno));
     dprintf(fd, "     write   : %ld\n", ret_real);
 
     dprintf(fd, "-------------------------------\n");
 
     close(fd);
+
+	dprintf(fd, "TEST 7 - fd cerrado\n");
+
+	ret_ft = ft_write(fd, "CLOSED\n", 7);
+	dprintf(fd, ", errno = %d (%s)", errno, strerror(errno));
+    dprintf(fd, "     ft_write: %ld\n", ret_ft);
+
+	ret_real = write(fd, "CLOSED\n", 7);
+	dprintf(fd, ", errno = %d (%s)", errno, strerror(errno));
+    dprintf(fd, "     write   : %ld\n", ret_real);
+
     return (0);
 }
 
@@ -75,7 +121,7 @@ int	main(void)
 
 
 
-
+/*
 ssize_t	ft_write(int fd, const void *buf, size_t count);
 
 static void	print_result(int out_fd, const char *name,
@@ -109,9 +155,6 @@ int	main(void)
 	if (fd < 0)
 		return (1);
 
-	/*
-	 * TEST 0
-	 */
 	dprintf(fd, "================================\n");
 	dprintf(fd, "TEST 0 - escribir \"Hola\"\n");
 	dprintf(fd, "================================\n");
@@ -125,10 +168,6 @@ int	main(void)
 	print_result(fd, "ft_write", ret_ft, errno_ft,
 		ret_real, errno_real);
 
-
-	/*
-	 * TEST 1
-	 */
 	dprintf(fd, "TEST 1 - escribir una letra\n");
 
 	ret_ft = ft_write(fd, "A\n", 2);
@@ -140,10 +179,6 @@ int	main(void)
 	print_result(fd, "ft_write", ret_ft, errno_ft,
 		ret_real, errno_real);
 
-
-	/*
-	 * TEST 2
-	 */
 	dprintf(fd, "TEST 2 - escribir menos caracteres que el string\n");
 
 	ret_ft = ft_write(fd, "Patatas\n", 4);
@@ -155,10 +190,6 @@ int	main(void)
 	print_result(fd, "ft_write", ret_ft, errno_ft,
 		ret_real, errno_real);
 
-
-	/*
-	 * TEST 3
-	 */
 	dprintf(fd, "TEST 3 - count = 0\n");
 
 	ret_ft = ft_write(fd, "Esto no se escribe\n", 0);
@@ -170,10 +201,6 @@ int	main(void)
 	print_result(fd, "ft_write", ret_ft, errno_ft,
 		ret_real, errno_real);
 
-
-	/*
-	 * TEST 4
-	 */
 	dprintf(fd, "TEST 4 - escribir una frase\n");
 
 	ret_ft = ft_write(fd, "Hola desde libasm\n", 18);
@@ -185,10 +212,6 @@ int	main(void)
 	print_result(fd, "ft_write", ret_ft, errno_ft,
 		ret_real, errno_real);
 
-
-	/*
-	 * TEST 5
-	 */
 	dprintf(fd, "TEST 5 - fd incorrecto (-1)\n");
 
 	invalid_fd = -1;
@@ -202,10 +225,6 @@ int	main(void)
 	print_result(fd, "ft_write", ret_ft, errno_ft,
 		ret_real, errno_real);
 
-
-	/*
-	 * TEST 6
-	 */
 	dprintf(fd, "TEST 6 - fd cerrado\n");
 
 	{
@@ -233,10 +252,6 @@ int	main(void)
 		}
 	}
 
-
-	/*
-	 * TEST 7
-	 */
 	dprintf(fd, "TEST 7 - string vacio con count = 0\n");
 
 	ret_ft = ft_write(fd, "", 0);
@@ -248,10 +263,6 @@ int	main(void)
 	print_result(fd, "ft_write", ret_ft, errno_ft,
 		ret_real, errno_real);
 
-
-	/*
-	 * FIN
-	 */
 	dprintf(fd, "\n");
 	dprintf(fd, "================================\n");
 	dprintf(fd, "FIN DE LOS TESTS\n");
@@ -261,3 +272,4 @@ int	main(void)
 
 	return (0);
 }
+*/

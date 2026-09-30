@@ -71,7 +71,6 @@ int ft_atoi_base1(const char *str, char *base)
 	base_len = strlen(base);
 	while (str[i])
 	{
-		printf("num(%i) = num(%i) * base_len(%i) + get_pos(%i)\n", (num * base_len + get_pos(str[i], base)), num, base_len, get_pos(str[i], base));
 		num = num * base_len + get_pos(str[i], base);
 		i++;
 	}
@@ -84,61 +83,61 @@ int main(void)
 {
 	printf("TEST 0: %s   %s\n", "12", "0123456789");
     printf("ft_atoi_base1: %i\n", ft_atoi_base1("12", "0123456789"));
-    printf("ft_atoi_base: %i\n", ft_atoi_base("12", "0123456789"));
+    printf("ft_atoi_base : %i\n", ft_atoi_base("12", "0123456789"));
 
 	printf("-------------------------------\n");
 
 	printf("TEST 1: %s   %s\n", "1000", "01");
     printf("ft_atoi_base1: %i\n", ft_atoi_base1("1000", "01"));
-    printf("ft_atoi_base: %i\n", ft_atoi_base("1000", "01"));
+    printf("ft_atoi_base : %i\n", ft_atoi_base("1000", "01"));
 
 	printf("-------------------------------\n");
 
 	printf("TEST 2: %s   %s\n", "12A", "0123456789ABCDEF");
     printf("ft_atoi_base1: %i\n", ft_atoi_base1("12A", "0123456789ABCDEF"));
-    printf("ft_atoi_base: %i\n", ft_atoi_base("12A", "0123456789ABCDEF"));
+    printf("ft_atoi_base : %i\n", ft_atoi_base("12A", "0123456789ABCDEF"));
 
 	printf("-------------------------------\n");
 
 	printf("TEST 3: %s   %s\n", "+1000", "01");
     printf("ft_atoi_base1: %i\n", ft_atoi_base1("+1000", "01"));
-    printf("ft_atoi_base: %i\n", ft_atoi_base("+1000", "01"));
+    printf("ft_atoi_base : %i\n", ft_atoi_base("+1000", "01"));
 
 	printf("-------------------------------\n");
 
 	printf("TEST 4: %s   %s\n", "-1000", "01");
     printf("ft_atoi_base1: %i\n", ft_atoi_base1("-1000", "01"));
-    printf("ft_atoi_base: %i\n", ft_atoi_base("-1000", "01"));
+    printf("ft_atoi_base : %i\n", ft_atoi_base("-1000", "01"));
 
 	printf("-------------------------------\n");
 
 	printf("TEST 5: %s   %s\n", "10+00", "01");
     printf("ft_atoi_base1: %i\n", ft_atoi_base1("10+00", "01"));
-    printf("ft_atoi_base: %i\n", ft_atoi_base("10+00", "01"));
+    printf("ft_atoi_base : %i\n", ft_atoi_base("10+00", "01"));
 
 	printf("-------------------------------\n");
 
 	printf("TEST 6: %s   %s\n", "1000", "0+1");
     printf("ft_atoi_base1: %i\n", ft_atoi_base1("1000", "0+1"));
-    printf("ft_atoi_base: %i\n", ft_atoi_base("1000", "0+1"));
+    printf("ft_atoi_base : %i\n", ft_atoi_base("1000", "0+1"));
 
 	printf("-------------------------------\n");
 
 	printf("TEST 7: %s   %s\n", "10 00", "01");
     printf("ft_atoi_base1: %i\n", ft_atoi_base1("10 00", "01"));
-    printf("ft_atoi_base: %i\n", ft_atoi_base("10 00", "01"));
+    printf("ft_atoi_base : %i\n", ft_atoi_base("10 00", "01"));
 
 	printf("-------------------------------\n");
 
 	printf("TEST 8: %s   %s\n", "1000", "0 1");
     printf("ft_atoi_base1: %i\n", ft_atoi_base1("1000", "0 1"));
-    printf("ft_atoi_base: %i\n", ft_atoi_base("1000", "0 1"));
+    printf("ft_atoi_base : %i\n", ft_atoi_base("1000", "0 1"));
 
 	printf("-------------------------------\n");
 
 	printf("TEST 9: %s   %s\n", "10800", "01");
     printf("ft_atoi_base1: %i\n", ft_atoi_base1("10800", "01"));
-    printf("ft_atoi_base: %i\n", ft_atoi_base("10800", "01"));
+    printf("ft_atoi_base : %i\n", ft_atoi_base("10800", "01"));
 
     return 0;
 }
