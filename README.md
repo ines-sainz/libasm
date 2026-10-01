@@ -289,24 +289,7 @@ C y ASM generan el mismo binario ELF
 - `ar -rcs libasm.a programas.o`
 - `gcc main.c -L. libasm.a`
 
-## FT_STRLEN
-```
-size_t	ft_strlen(const char *s)
-{
-	size_t	i;
-
-	i = 0;
-	if (!s)
-		return (0);
-	while (s[i])
-		i++;
-	return (i);
-}
-```
-
-(*s)++
-
-### xor rcx, rcx
+## xor rcx, rcx
 - no necesita memoria
 - no depende de valores anteriores
 - rompe dependencias internas usando el dependency breaking
@@ -317,7 +300,7 @@ size_t	ft_strlen(const char *s)
 - Modifica flags
 - ZF = 1
 - SF = 0
-### mov rcx, 0
+## mov rcx, 0
 - carga un inmediato
 - ocupa más espacio
 - menos óptimo
@@ -356,52 +339,6 @@ jmp error
 
 no_error:
 ```
-
-## FT_STRCPY
-```
-char	*ft_strcpy(char *dest, char *src)
-{
-	int	i;
-
-	i = 0;
-	while (src[i] != '\0')
-	{
-		dest[i] = src[i];
-		i++;
-	}
-	dest[i] = '\0';
-	return (dest);
-}
-
-```
-
-```
-char *ft_strcpy(char *dest, const char *src)
-{
-    char *original_dest = dest;
-
-    while (*src != '\0')
-    {
-        *dest = *src;
-        dest++;
-        src++;
-    }
-
-    *dest = '\0';
-    return original_dest;
-}
-```
-
-mov byte ptr al, [rsi]
-
-no usas byte ptr con registros, solo con memoria.
-
-mov al, [rsi]
-
-
-.section .note.GNU-stack,"",@progbits
-|->
-“This object file does not need an executable stack.”
 
 ## FT_STRCMP
 ```

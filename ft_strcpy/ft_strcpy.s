@@ -1,20 +1,22 @@
+# Entrada: rdi contiene el puntero a la cadena (const char *s)
+# Salida:  rax contiene el puntero origina de la cadena (char*)
+
 .intel_syntax noprefix
 .global ft_strcpy
 
 ft_strcpy:
-	xor rcx, rcx
-	loop:
-		cmp byte ptr [rcx + rsi], 0
-		je salir
-
-		mov al, [rcx + rsi]
-		mov [rcx + rdi], al
-		inc rcx
-		jmp loop
-
-salir:
-	mov byte ptr [rcx + rdi], 0
 	mov rax, rdi
+
+.loop:
+	mov dl, byte ptr [rsi]
+	mov byte ptr [rdi], dl
+
+	inc rsi
+	inc rdi
+
+	cmp dl, 0
+	jne .loop
+
 	ret
 
 .section .note.GNU-stack,"",@progbits
