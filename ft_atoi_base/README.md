@@ -1,10 +1,8 @@
 # ft_atoi_base
 
-Implementación de la función `ft_atoi_base` en lenguaje Ensamblador (x86-64, sintaxis Intel). Esta es una de las funciones más complejas de `libasm` porque requiere validaciones anidadas, operaciones aritméticas (multiplicación) y múltiples bucles. Convierte una cadena de texto en un número entero basándose en una base numérica proporcionada como argumento (ej. binario `"01"`, hexadecimal `"0123456789ABCDEF"`).
+Implementación de `ft_atoi_base` en lenguaje Ensamblador (x86-64, sintaxis Intel). Requiere validaciones anidadas, operaciones aritméticas (multiplicación) y múltiples bucles. Convierte una cadena de texto en un número entero basándose en una base numérica proporcionada como argumento.
 
 ## Traducción de C a Ensamblador
-
-La siguiente tabla mapea la lógica mental de un programa en C a los registros que has utilizado en tu ensamblador:
 
 | Concepto en C | Registro / Ensamblador (x86-64) | Explicación |
 | --- | --- | --- |

@@ -88,7 +88,6 @@ get_pos:
         inc r8
         jmp loop_pos
 
-
 return_loop_pos1:
     mov rax, 0
     ret
