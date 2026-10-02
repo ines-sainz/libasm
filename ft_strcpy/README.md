@@ -15,7 +15,7 @@ La Aritmética de Punteros es lo más eficiente. Usa `[rsi]` y `[rdi]` reduciend
 ft_strcpy:
     mov rax, rdi            # Guarda el puntero original de dest para el return
 
-.loop_start:
+.loop:
     mov dl, byte ptr [rsi]  # 1. Movemos el byte de origen a un registro (un acceso a memoria)
     mov byte ptr [rdi], dl  # 2. Lo copiamos a destino (incluye el \0 del final)
     
@@ -23,7 +23,7 @@ ft_strcpy:
     inc rdi                 # 4. Avanzamos puntero destino
     
     cmp dl, 0               # 5. Compronamos si el byte que copiamos era el \0
-    jne .loop_start         # Si no era 0, iteramos de nuevo
+    jne .loop               # Si no era 0, iteramos de nuevo
 
     ret                     # Si es 0 salimos, rax tiene el puntero original
 
