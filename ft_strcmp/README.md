@@ -1,44 +1,30 @@
 # ft_strcmp
 
-Implementación de la función `ft_strcmp` en lenguaje Ensamblador (x86-64, sintaxis Intel) para la librería `libasm`. La función compara dos cadenas de caracteres byte a byte y devuelve la diferencia aritmética entre el primer par de caracteres que no coinciden. La comparación se hace con caracteres sin signo (`unsigned char`), tal como dicta el estándar de C.
+Implementación de `ft_strcmp` en lenguaje Ensamblador (x86-64, sintaxis Intel). Compara dos cadenas de caracteres byte a byte y devuelve la diferencia aritmética entre el primer par de caracteres que no coinciden. La comparación se hace con caracteres sin signo (`unsigned char`).
 
 ## Traducción de C a Ensamblador
 
-La siguiente tabla muestra la correspondencia conceptual entre la lógica de C y tu código en Ensamblador:
-
-| Concepto en C | Equivalente en Ensamblador (x86-64) | Explicación |
-| --- | --- | --- |
-| `char *s1` | `rdi` | Primer argumento (puntero a la primera cadena). |
-| `char *s2` | `rsi` | Segundo argumento (puntero a la segunda cadena). |
-| `s1[i]` (o `*s1`) | `al` (vía `mov al, [rdi]`) | El byte actual de la primera cadena en un registro de 8 bits. |
-| `s2[i]` (o `*s2`) | `dl` (vía `mov dl, [rsi]`) | El byte actual de la segunda cadena en un registro de 8 bits. |
-| `s1[i] != s2[i]` | `cmp al, dl` \| `jne salir` | Compara los registros. Si son diferentes (Jump if Not Equal), sale del bucle. |
-| `s1[i] == '\0'` | `cmp al, 0` \| `je salir` | Comprueba si se alcanzó el fin de la cadena. Al haber pasado el `jne` anterior, sabemos que `dl` también es `0`. |
-| `i++` | `inc rdi` / `inc rsi` | Incrementa los punteros para avanzar al siguiente carácter. |
 | `(unsigned char)s1[i]` | `movzx rax, al` | Expande el registro de 8 bits (`al`) a 64 bits (`rax`) rellenando con ceros. Fundamental para comparar sin signo. |
-| `return s1[i] - s2[i];` | `sub rax, rdx` \| `ret` | Resta el valor de la segunda cadena a la primera y devuelve el resultado en `rax`. |
 
 ---
 
-## Conceptos Clave y Aprendizajes
-
-Este código es excelente para entender cómo interactúan los tamaños de los registros y el manejo de signos a bajo nivel. Aquí están las partes más importantes:
+## Conceptos Clave
 
 ### 1. La importancia de `unsigned char`
 
-El estándar de C dicta que `strcmp` debe comparar los caracteres como si fueran `unsigned char` (sin signo). Si un carácter de la tabla ASCII extendida (por ejemplo, `é`, `ñ` o caracteres especiales donde el primer bit es `1`) se interpreta con signo, la CPU lo considerará un número negativo, lo que arruinaría el resultado matemático de la resta final. Tu código soluciona esto manipulando exclusivamente registros de 8 bits (`al`, `dl`) dentro del bucle.
+El estándar de C dicta que la comparación de caracteres es sin signo `unsigned char`, ya que si no interpreta la tabla ASCII extendida como números negativos. Solucionamos esto manipulando exclusivamente registros de 8 bits (`al`, `dl`) dentro del bucle.
 
-### 2. La instrucción `movzx` (Move with Zero-Extend)
+### 2. Instrucción `movzx` (Move with Zero-Extend)
 
-Esta es la verdadera estrella de tu código de salida. Cuando haces `movzx rax, al`, le estás diciendo a la CPU: *"Copia estos 8 bits (`al`) en un registro de 64 bits (`rax`), y rellena los 56 bits restantes exclusivamente con ceros"*.
-Si hicieras un simple `mov rax, al` (ilegal por tener distintos tamaños) o usaras `movsx` (Move with Sign-Extend), un carácter extendido se rellenaría con unos (`1`) hacia la izquierda para mantener el signo negativo, dando un retorno completamente incorrecto.
+Al hacer `movzx rax, al` copias los 8 bits (`al`) en un registro de 64 bits (`rax`), y rellena los 56 bits restantes con ceros.
+`mov rax, al` y `movsx` (Move with Sign-Extend) rellenan un carácter extendido con 1 hacia la izquierda para mantener el signo negativo, dando un retorno incorrecto.
 
-### 3. La doble validación en el bucle (`cmp al, dl` y `cmp al, 0`)
+### 3. Doble validación (`cmp al, dl` y `cmp al, 0`)
 
-El bucle resuelve tres casos posibles de manera muy eficiente:
+Resuelve tres casos a la vez:
 
-1. **Los caracteres son distintos:** El primer `cmp al, dl` detecta la diferencia y el `jne` nos saca del bucle inmediatamente para calcular la resta.
-2. **Las cadenas han terminado y son iguales:** Si no saltó el `jne`, significa que `al == dl`. Luego, el `cmp al, 0` comprueba si llegamos al byte nulo `\0`. Si es así, ambas cadenas terminaron al unísono y son idénticas, saliendo al bloque final (donde `0 - 0 = 0`).
+1. **Los caracteres son distintos:** `cmp al, dl` detecta sin son diferentes y sale del bucle para  calcular la diferencia.
+2. **Las cadenas han terminado y son iguales:** al saltar `jne`, `al == dl`. El `cmp al, 0` comprueba si llegamos al byte nulo `\0`. Así que sale del bucle si las dos cadenas han terminado `0 - 0 = 0`.
 3. **Los caracteres son iguales pero no es el final:** Ninguno de los dos saltos se activa, por lo que se incrementan los punteros y el bucle continúa.
 
 ---
