@@ -1,5 +1,6 @@
 # Entrada: rdi contiene el puntero a la cadena (const char *s1)
-# Salida:  rax contiene el puntero a la cadena a comparar (const char *s2)
+# Entrada: rsi contiene el puntero a la cadena a comparar (const char *s2)
+# Salida:  rax contiene la diferencia entre los dos caracteres en ASCII (int)
 
 .intel_syntax noprefix
 .global ft_strcmp
