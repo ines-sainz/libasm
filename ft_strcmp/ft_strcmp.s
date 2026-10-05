@@ -2,26 +2,25 @@
 .global ft_strcmp
 
 ft_strcmp:
+    xor eax, eax
+    xor edx, edx
 
-loop:
+.loop:
+    mov al, byte ptr [rdi]
+    mov dl, byte ptr [rsi]
 
-	mov al, [rdi]
-	mov dl, [rsi]
+    cmp al, dl
+    jne .return
 
-	cmp al, dl
-	jne salir
+    cmp al, 0
+    je .return
 
-	cmp al, 0
-	je salir
+    inc rdi
+    inc rsi
+    jmp .loop
 
-	inc rdi
-	inc rsi
-	jmp loop
-
-salir:
-	movzx rax, al
-	movzx rdx, dl
-	sub rax, rdx
-	ret
+.return:
+    sub rax, rdx
+    ret
 
 .section .note.GNU-stack,"",@progbits
