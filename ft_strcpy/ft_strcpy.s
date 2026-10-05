@@ -1,5 +1,5 @@
 # Entrada: rdi contiene el puntero a la cadena (const char *s)
-# Salida:  rax contiene el puntero origina de la cadena (char*)
+# Salida:  rax contiene el puntero original de la cadena (char*)
 
 .intel_syntax noprefix
 .global ft_strcpy
