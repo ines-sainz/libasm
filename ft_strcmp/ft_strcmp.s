@@ -1,3 +1,6 @@
+# Entrada: rdi contiene el puntero a la cadena (const char *s1)
+# Salida:  rax contiene el puntero a la cadena a comparar (const char *s2)
+
 .intel_syntax noprefix
 .global ft_strcmp
 
