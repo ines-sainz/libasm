@@ -1,10 +1,10 @@
 # ft_write
 
-Implementación de `ft_write` en lenguaje Ensamblador (x86-64, sintaxis Intel). Escribe una cantidad de bytes determinada desde un búfer hacia un file descriptor. Actúa como un puente hacia la llamada al sistema original, gestionando correctamente el valor de retorno y asignando el código de error adecuado si falla.
+Implementación de `ft_write` en lenguaje Ensamblador (x86-64, sintaxis Intel). Escribe una cantidad de bytes determinada desde un búfer hacia un file descriptor. Actúa como un puente hacia la llamada al sistema original, gestionando correctamente el valor de retorno y asignando el código de error si falla.
 
 ## Código
 
-Para que la función se comporte exactamente igual que la original en C, los argumentos ya vienen listos en los registros correctos. Solo debemos comprobar qué devuelve el kernel tras el `syscall`. Si devuelve un número negativo, debemos llamar a la función `__errno_location` para obtener la dirección de memoria de la variable global `errno` y asignarle el código del fallo.
+Los argumentos de la función original en C tiene exaxtamente los argumentos en los registros correctos. Solo debemos comprobar qué devuelve el kernel tras el `syscall`. Si devuelve un número negativo, debemos llamar a la función `__errno_location` para obtener la dirección de memoria de la variable global `errno` y asignarle el código del fallo.
 
 ```assembly
 .intel_syntax noprefix
